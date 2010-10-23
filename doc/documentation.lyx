@@ -1,0 +1,312 @@
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+
+
+\usepackage{vmargin}% redÃ©finir les marges
+\usepackage{hyperref}
+
+\setmarginsrb{1.5cm}{2cm}{1.5cm}{2cm}{0cm}{0cm}{0cm}{0cm}
+\end_preamble
+\use_default_options false
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename logo.eps
+	scale 90
+
+\end_inset
+
+ 
+\begin_inset Newline newline
+\end_inset
+
+ 
+\size larger
+Sensory substitution library for playing and experimenting 
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+Wavy is a sensory substitution software package.
+ Sensory substitution is defined by Wikipedia as :
+\end_layout
+
+\begin_layout Quote
+
+\size larger
+[A process that mean] to transform the characteristics of one sensory modality
+ into stimuli of another sensory modality.
+ It is hoped that sensory substitution systems can help handicapped people
+ by restoring their ability to perceive a certain defective sensory modality
+ by using sensory information from a functioning sensory modality.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+For more details see :
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://en.wikipedia.org/wiki/Sensory_substitution
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+Wavy is primarily intended to be a visual-to-sound substitution system.
+ However it is designed to be an easily extendable framework in order to
+ develop other types of sensory substitution system.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+So what's the difference with Wavy and why another sensory substitution
+ package ? Others sensory substitution systems are coded in C/C++ or Java
+ programming language and are designed to be used as an end user application.
+ Instead, Wavy is designed as a framework to develop new ideas in the sensory
+ substitution field.
+ Main goals are
+\end_layout
+
+\begin_layout Enumerate
+
+\size larger
+using an agile and multi-platform language
+\end_layout
+
+\begin_layout Enumerate
+
+\size larger
+developping a general framework for sensory substitution with great extendable
+ capabilities
+\end_layout
+
+\begin_layout Enumerate
+
+\size larger
+to be very flexible in context of usage (gaming, scientific research, R&D
+ or why not real life)
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+Python was choose for its ability to be very powerfull and extensible.
+ It favorise experimentation and rapid developpment of new ideas/features.
+ It provide a large collection of quality standard and third-party packages
+ in many fields (GUI, games, numerical computation etc.).
+ After prototyping, code can be profiled and bottlnecks could be moved in
+ C/C++ code.
+\end_layout
+
+\begin_layout Section
+Quick start
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+You can easily start using wavy :
+\end_layout
+
+\begin_layout Enumerate
+
+\size larger
+Unpack archive
+\end_layout
+
+\begin_layout Enumerate
+
+\size larger
+run a game demo (*Demo.py files)
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+You can also run theWave which sonify a webcam input (obviously, need a
+ webcam).
+
+\emph on
+ 
+\series bold
+Please check your Python installation, see installation section bellow for
+ more details.
+\end_layout
+
+\begin_layout Section
+Installation
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+If you just want to play with Wavy, the easier solution is to unpack the
+ content of the archive and run provided toys programs (like test.py for
+ example).
+ Instead, if you want to use Wavy in a more flexible manner, or within a
+ developpment perspective it's better to install properly the Wavy package
+ in your Python environment.
+ In this case, please follow these steps : 
+\end_layout
+
+\begin_layout Enumerate
+
+\size larger
+unpack the archive 
+\end_layout
+
+\begin_layout Enumerate
+
+\size larger
+run "python setup.py install" command in a terminal from the src directory.
+ Please see the distutils documentation online for more details on this
+ command.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+\begin_inset VSpace medskip
+\end_inset
+
+ System requierment :
+\begin_inset Newline newline
+\end_inset
+
+ Wavy is intended to be cross-platform.
+ You need : 
+\end_layout
+
+\begin_layout Itemize
+
+\size larger
+a python standard installation (see availability : 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.python.org/download/
+\end_layout
+
+\end_inset
+
+) 
+\end_layout
+
+\begin_layout Itemize
+
+\size larger
+Numpy library
+\end_layout
+
+\begin_layout Itemize
+
+\size larger
+pyGame library
+\end_layout
+
+\begin_layout Itemize
+
+\size larger
+use with webcam : openCV binding for python 
+\end_layout
+
+\begin_layout Section
+Description
+\end_layout
+
+\begin_layout Subsection
+The Retina and ReceptiveField clases
+\end_layout
+
+\begin_layout Subsection
+The WavyGame class
+\end_layout
+
+\end_body
+\end_document
