@@ -17,11 +17,11 @@ class psychopyWrapper(WavySoundGame):
     
     def __init__(self, winHandle, title = 'a test', config_file = './wavy.conf'):
         super(WavySoundGame, self).__init__(config_file, title)
-        self._winHandle = winHandle
+        self.WIN_HANDLE = winHandle
         self.init()
     
     def display_INIT(self):
-        self.SCREEN = pixels2d(self._winHandle)
+        self.INPUT_FIELD = pixels2d(self.WIN_HANDLE)
 
     def refresh(self):
         self.RETINA.update()
@@ -40,7 +40,7 @@ class psychopyWrapper(WavySoundGame):
 
 def main():
     #create a window to draw in
-    myWin = visual.Window((600,600), allowGUI=False, winType = 'pygame')
+    myWin = visual.Window((640,480), allowGUI=False, winType = 'pygame')
     ppw = psychopyWrapper(myWin.winHandle)
 
     #INITIALISE SOME STIMULI

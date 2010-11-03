@@ -89,8 +89,8 @@ def LinearGridRetina(x_size, y_size, x_res, y_res, nbr_cap, sd_cap):
 
 	rf_list = []
 	cap_list = []
-	x_grid = np.linspace(0, x_size, round(x_size / x_res))
-	y_grid = np.linspace(0, y_size, round(y_size / y_res))
+	x_grid = np.linspace(0, x_size - 1, round(x_size / x_res))
+	y_grid = np.linspace(0, y_size - 1, round(y_size / y_res))
 
 	for X in x_grid:
 		for Y in y_grid:
