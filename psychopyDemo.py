@@ -40,7 +40,7 @@ class psychopyWrapper(WavySoundGame):
 
 def main():
     #create a window to draw in
-    myWin = visual.Window((640,480), allowGUI=False, winType = 'pygame')
+    myWin = visual.Window((641,481), allowGUI=False, winType = 'pygame')
     ppw = psychopyWrapper(myWin.winHandle)
 
     #INITIALISE SOME STIMULI

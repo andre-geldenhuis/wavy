@@ -101,12 +101,12 @@ def LinearGridRetina(x_size, y_size, x_res, y_res, nbr_cap, sd_cap):
        				y = int(round(normalvariate(Y, sd_cap)))					
 				if x < 0:
 					x = 0
-				elif x > x_size:
+				elif x >= x_size:
 					x = x_size - 1
 					
 				if y < 0:
 					y = 0   
-				elif y > y_size:
+				elif y >= y_size:
 					y = y_size - 1
 					
 				caps.append((x, y))
@@ -138,12 +138,12 @@ def LinearRandomRetina(x_size, y_size, nbr_rf, nbr_cap, sd_cap):
          
                 if x < 0:
                     x = 0
-                elif x > x_size:
+                elif x >= x_size:
                     x = x_size - 1
                 
                 if y < 0:
                     y = 0   
-                elif y > y_size:
+                elif y >= y_size:
                     y = y_size - 1
 
 		caps.append((x, y))
