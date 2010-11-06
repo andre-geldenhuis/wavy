@@ -31,20 +31,25 @@ from WavyGame import WavySoundGame
 
 
 class PsychopyWrapper(WavySoundGame):
-
-    def __init__(self, config_file = 'wavy.conf'):
-        super(WavySoundGame, self).__init__(config_file, 'Psychopywrapper')
+    
+    def __init__(self, winHandle, title = 'a test', config_file = './wavy.conf'):
+        super(WavySoundGame, self).__init__(config_file, title)
+        self.WIN_HANDLE = winHandle
         self.init()
-        
+    
     def display_INIT(self):
-        "Setup the display system"
-        self.SCREEN =  visual.Window((self.HEIGHT, self.WIDTH), winType='pygame', allowGUI=False)
-        self.INPUT_FIELD = pixels2d(self.SCREEN)
+        self.INPUT_FIELD = pixels2d(self.WIN_HANDLE)
+
+    def refresh(self):
+        self.RETINA.update()
 
     def fetchConfig(self):
-        'Virtual method for fetching configuration file'
-        raise NotImplementedError
-
-    def main(self):
-        'Virtual main method'
-        raise NotImplementedError
+        "Simple implementation of fetch config method, should be overloaded"
+        self.RETINA_FILE = self.CONFIG.get('GAME', 'RETINA_FILE')
+        self.WIDTH = self.CONFIG.getint('GAME', 'WIDTH')
+        self.HEIGHT = self.CONFIG.getint('GAME', 'HEIGHT')
+        self.FS = self.CONFIG.getint('SONIFICATION', 'FS')
+        self.AMP = self.CONFIG.getfloat('SONIFICATION', 'AMP')
+        self.FREQ_MIN = self.CONFIG.getfloat('SONIFICATION', 'FREQ_MIN')
+        self.FREQ_MAX = self.CONFIG.getfloat('SONIFICATION', 'FREQ_MAX')
+        self.MAX_TIME = self.CONFIG.getfloat('SONIFICATION', 'MAX_TIME')
