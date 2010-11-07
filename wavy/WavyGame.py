@@ -51,30 +51,30 @@ class WavyGame(Thread):
         Constructor
         '''
         Thread.__init__(self)
-        self.HEIGHT = None
-        self.WIDTH = None
-        self.SCREEN = None           # pyGame display reference
-        self.INPUT_FIELD = None      # array reference to SCREEN
-        self.RETINA = None
-        self.CONFIG = ConfigParser.RawConfigParser()
-        self.CONFIG_FILE = config_file
-        self.TITLE = title
+        self._height = None
+        self._width = None
+        self._screen = None           # pyGame display reference
+        self._input_field = None      # array reference to SCREEN
+        self._retina = None
+        self._config = ConfigParser.RawConfigParser()
+        self._config_file = config_file
+        self._title = title
 
     def writeConfig(self):
         "Write the config file"
         try:
-            f = open(str(self.CONFIG_FILE), 'w')
+            f = open(str(self._config_file), 'w')
 
         except IOError:
-            print('Unable to write config file : %s' % self.CONFIG_FILE)
+            print('Unable to write config file : %s' % self._config_file)
             
-        self.CONFIG.write(f)
+        self._config.write(f)
         f.close()
 
     def config_INI(self):
         "Read the config file and fetch values"
-        if self.CONFIG_FILE is not None:
-            self.CONFIG.read(self.CONFIG_FILE)
+        if self._config_file is not None:
+            self._config.read(self._config_file)
             try:
                 self.fetchConfig()
 
@@ -82,20 +82,20 @@ class WavyGame(Thread):
                 print('fetchConfig is called without a correct implementation')
 
             except IOError:
-                print('Unable to fetch config file : %s' % self.CONFIG_FILE)
+                print('Unable to fetch config file : %s' % self._config_file)
                 exit(1)
     
     def display_INIT(self):
         "Setup the display system"
         pygame.display.init()
-        self.SCREEN = pygame.display.set_mode((self.WIDTH, self.HEIGHT), 0, 8)
-        pygame.display.set_caption(self.TITLE)
-        self.INPUT_FIELD = pixels2d(self.SCREEN)
+        self._screen = pygame.display.set_mode((self._width, self._height), 0, 8)
+        pygame.display.set_caption(self._title)
+        self._input_field = pixels2d(self._screen)
         
     def refresh(self):
         "Refresh screen and Retina"
         pygame.display.update()
-        self.RETINA.update()
+        self._retina.update()
 
     def init(self):
         "Generic init method"
@@ -126,21 +126,21 @@ class WavySoundGame(WavyGame):
     def __init__(self, config_file, title = 'Wavy Game Engine'):
         "Constructor"
         super(WavyGame, self).__init__(config_file, title)
-        self.RETINA_FILE = None
-        self.FS = None        # Audio parameters pre-init : required 
-        self.FREQ_MIN = None  # a properly implemented fetchConfig method is needed
-        self.FREQ_MAX = None
-        self.AMP = None
+        self._retina_file = None
+        self._fs = None        # Audio parameters pre-init : required 
+        self._freq_min = None  # a properly implemented fetchConfig method is needed
+        self._freq_max = None
+        self._amp = None
        
     def init(self):
         "General init: fetch config, setup retina, display and sound system"
         self.config_INI()
         self.display_INIT()
-        self.RETINA = Retina(self.RETINA_FILE, SoundRF, self.INPUT_FIELD)
-        pygame.mixer.pre_init(self.FS, -16, 2, 1024*4)
+        self._retina = Retina(self._retina_file, SoundRF, self._input_field)
+        pygame.mixer.pre_init(self._fs, -16, 2, 1024*4)
         pygame.mixer.init()
-        pygame.mixer.set_num_channels(self.RETINA.getNum_RF() * 2)
-        rfs = self.RETINA.RF_LIST
+        pygame.mixer.set_num_channels(self._retina.getNum_RF() * 2)
+        rfs = self._retina._rf_list
         for rf in rfs:
-            rf.setAudioParams(self.FREQ_MIN, self.FREQ_MAX, self.MAX_TIME, \
-                              self.AMP, self.FS)
+            rf.setAudioParams(self._freq_min, self._freq_max, self._max_time, \
+                              self._amp, self._fs)

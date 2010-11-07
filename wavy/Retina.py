@@ -46,13 +46,13 @@ class Retina(Thread):
     def __init__(self, file_name, rf_model, input_array):
         "Constructor"
         Thread.__init__(self)
-        self.X_SIZE = None
-        self.Y_SIZE = None
-        self.RF_LIST = []
-        self.RF_MODEL = rf_model
-        self.INPUT_FIELD = input_array
+        self._x_size = None
+        self._y_size = None
+        self._rf_list = []
+        self._rf_model = rf_model
+        self._input_field = input_array
         self.initRetina(file_name)
-        self.NBR_RF = len(self.RF_LIST)
+        self._nbr_rf = len(self._rf_list)
         
     def initRetina(self, file_name):
         "Read the retina file and setup all Receptive Fields according to retina file data's"
@@ -68,8 +68,8 @@ class Retina(Thread):
 
         # Read data X and Y
         data = retina_data.pop(0).split(';')
-        self.X_SIZE = int(data[0])
-        self.Y_SIZE = int(data[1])
+        self._x_size = int(data[0])
+        self._y_size = int(data[1])
         nb_lines = len(retina_data)
         
          # Reading file: first line (Recpetive Field position), second line (Captors list position)
@@ -90,17 +90,17 @@ class Retina(Thread):
                 cap_list.append((x, y))
                 c2 += 2
                 
-            rf = self.RF_MODEL(X, Y, cap_list, self)
-            self.RF_LIST.append(rf)
+            rf = self._rf_model(X, Y, cap_list, self)
+            self._rf_list.append(rf)
             c1 += 2                    
 
     def getNum_RF(self):
         "Return the number of Receptive Fields set into the retina"
-        return self.NBR_RF
+        return self._nbr_rf
                           
     def update(self):
         "Update each Receptive Field and output them"
-        for rf in self.RF_LIST:
+        for rf in self._rf_list:
             rf.update()
             rf.output()
 
@@ -122,18 +122,18 @@ class ReceptiveField(Thread):
     def __init__(self, x, y, cap_list, retina, threshold = 0):
         "Constructor"
         Thread.__init__(self)
-        self.X = x
-        self.Y = y
-        self.CAP_LIST = cap_list
-        self.NBR_CAP = len(cap_list)
-        self.THRESHOLD = threshold
-        self.RETINA = retina
-        self.INPUT_FIELD = retina.INPUT_FIELD
-        self.ACTIVITY = 0.
+        self._x = x
+        self._y = y
+        self._cap_list = cap_list
+        self._nbr_cap = len(cap_list)
+        self._threshold = threshold
+        self._retina = retina
+        self._input_field = retina._input_field
+        self._activity = 0.
         
     def t_func(self, initial_activity):
         "Transfert function"
-        if initial_activity > self.THRESHOLD:
+        if initial_activity > self._threshold:
             return initial_activity
         else:
             return 0
@@ -142,11 +142,11 @@ class ReceptiveField(Thread):
         "Update samples input accordingly to the numeric input <array>"
         activity = 0.
         
-        for cap in self.CAP_LIST:
-            v = self.INPUT_FIELD[cap[0], cap[1]]
+        for cap in self._cap_list:
+            v = self._input_field[cap[0], cap[1]]
             activity += v
 
-        self.ACTIVITY = self.t_func(activity / (255 * self.NBR_CAP))
+        self._activity = self.t_func(activity / (255 * self._nbr_cap))
         self.output()
 
     def output(self):
@@ -175,41 +175,41 @@ class SoundRF(ReceptiveField):
     def __init__(self, x, y, cap_list, retina, threshold = 0):
         "Constructor"
         super(SoundRF, self).__init__(x, y, cap_list, retina, threshold)
-        self.NB_CHANS = 2
-        self.FREQ_SPAN = None
-        self.MAX_TIME = None
-        self.AMP = None
-        self.FS = None
-        self.TONE = None
-        self.PAN = None
-        self.SINE = None
-        self.SOUND = None
-        self.CHNL = None
+        self._nb_chans = 2
+        self._freq_span = None
+        self._max_time = None
+        self._amp = None
+        self._fs = None
+        self._tone = None
+        self._pan = None
+        self._sine = None
+        self._sound = None
+        self._chnl = None
         
     def setAudioParams(self, freq_min, freq_max, max_time, amp = 10000, fs = 44100):
         "Setup audio paramters for the Receptive Field instance. This is an example, should be overloaded."
-        self.FREQ_SPAN = freq_max - freq_min
-        self.MAX_TIME = max_time
-        self.AMP = amp
-        self.FS = fs
-        self.TONE = freq_max - (self.Y / self.RETINA.Y_SIZE * self.FREQ_SPAN)
-        self.PAN = [.5 + (.5 - float(self.X)/self.RETINA.X_SIZE), .5 + (float(self.X)/self.RETINA.X_SIZE - .5)]
-        self.SINE = self.mkSineWave(self.TONE)
-        self.SOUND = pygame.sndarray.make_sound(self.SINE.T)
-        self.CHNL = pygame.mixer.find_channel()
-        self.CHNL.play(self.SOUND, loops = -1)
-        self.CHNL.set_volume(0, 0)
-        print('RF object inited - x: %d, y: %d, on %s' % (self.X, self.Y, self.CHNL))
+        self._freq_span = freq_max - freq_min
+        self._max_time = max_time
+        self._amp = amp
+        self._fs = fs
+        self._tone = freq_max - (self._y / self._retina._y_size * self._freq_span)
+        self._pan = [.5 + (.5 - float(self._x)/self._retina._x_size), .5 + (float(self._x)/self._retina._x_size - .5)]
+        self._sine = self.mkSineWave(self._tone)
+        self._sound = pygame.sndarray.make_sound(self._sine.T)
+        self._chnl = pygame.mixer.find_channel()
+        self._chnl.play(self._sound, loops = -1)
+        self._chnl.set_volume(0, 0)
+        print('RF object inited - x: %d, y: %d, on %s' % (self._x, self._y, self._chnl))
 
     def mkSineWave(self, tone):
         "Create a sinewave to be output"
-        sinewave = np.array(self.AMP * np.sin(tone * np.pi * np.arange(0, self.MAX_TIME, 1/self.FS)), dtype = np.int16)
-        if self.NB_CHANS == 2:
+        sinewave = np.array(self._amp * np.sin(tone * np.pi * np.arange(0, self._max_time, 1/self._fs)), dtype = np.int16)
+        if self._nb_chans == 2:
             sinewave = np.array([sinewave]*2, dtype = np.int16)
         return sinewave
         
     def output(self):
         "Sound output method"
-        left = self.PAN[0] * self.ACTIVITY
-        right = self.PAN[1] * self.ACTIVITY 
-        self.CHNL.set_volume(left, right)
+        left = self._pan[0] * self._activity
+        right = self._pan[1] * self._activity 
+        self._chnl.set_volume(left, right)

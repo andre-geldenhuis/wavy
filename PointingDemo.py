@@ -32,21 +32,21 @@ class PointingGame(WavySoundGame):
     
     def fetchConfig(self):
         "Simple implementation of fetch config method, should be overloaded"
-        self.RETINA_FILE = self.CONFIG.get('GAME', 'RETINA_FILE')
-        self.WIDTH = self.CONFIG.getint('GAME', 'WIDTH')
-        self.HEIGHT = self.CONFIG.getint('GAME', 'HEIGHT')
-        self.FS = self.CONFIG.getint('SONIFICATION', 'FS')
-        self.AMP = self.CONFIG.getfloat('SONIFICATION', 'AMP')
-        self.FREQ_MIN = self.CONFIG.getfloat('SONIFICATION', 'FREQ_MIN')
-        self.FREQ_MAX = self.CONFIG.getfloat('SONIFICATION', 'FREQ_MAX')
-        self.MAX_TIME = self.CONFIG.getfloat('SONIFICATION', 'MAX_TIME')
+        self._retina_file = self._config.get('GAME', 'RETINA_FILE')
+        self._width = self._config.getint('GAME', 'WIDTH')
+        self._height = self._config.getint('GAME', 'HEIGHT')
+        self._fs = self._config.getint('SONIFICATION', 'FS')
+        self._amp = self._config.getfloat('SONIFICATION', 'AMP')
+        self._freq_min = self._config.getfloat('SONIFICATION', 'FREQ_MIN')
+        self._freq_max = self._config.getfloat('SONIFICATION', 'FREQ_MAX')
+        self._max_time = self._config.getfloat('SONIFICATION', 'MAX_TIME')
 
     def main(self):
-        X_SIZE = self.WIDTH
-        Y_SIZE = self.HEIGHT
+        X_SIZE = self._width
+        Y_SIZE = self._height
         RADIUS = 50
         OUT_FILE = 'pointingOut.dat'
-        screen =self.SCREEN
+        screen =self._screen
         
         outfile = open(OUT_FILE, 'w') # output file for recording performance
         outfile.write("DX\tDY\tDISTANCE\n")

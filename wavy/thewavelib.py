@@ -52,40 +52,40 @@ class TheWaveMachine(WavySoundGame):
     def __init__(self):
         'Constructor'
         super(WavySoundGame, self).__init__('wavy.conf', 'theWave')
-        self.CAMERA = highgui.cvCreateCameraCapture(0)
-        self.FPS = 22
+        self._camera = highgui.cvCreateCameraCapture(0)
+        self._fps = 22
         self.init()
 
     def display_INIT(self):
         'Initialize display'
         pygame.display.init()
-        self.SCREEN = pygame.display.set_mode((self.WIDTH, self.HEIGHT), 0, 8)
-        pygame.display.set_caption(self.TITLE)
-        self.INPUT_FIELD = array2d(self.SCREEN) # surface locking prevent the use of array reference here
+        self._screen = pygame.display.set_mode((self._width, self._height), 0, 8)
+        pygame.display.set_caption(self._title)
+        self._input_field = array2d(self._screen) # surface locking prevent the use of array reference here
                                                 # using a copy method instead (performance loss)
     
     def fetchConfig(self):
         "fetchingConfig file according to WavySoundGame class audio paramters"
-        self.RETINA_FILE = self.CONFIG.get('GAME', 'RETINA_FILE')
-        self.WIDTH = self.CONFIG.getint('GAME', 'WIDTH')
-        self.HEIGHT = self.CONFIG.getint('GAME', 'HEIGHT')
-        self.FS = self.CONFIG.getint('SONIFICATION', 'FS')
-        self.AMP = self.CONFIG.getfloat('SONIFICATION', 'AMP')
-        self.FREQ_MIN = self.CONFIG.getfloat('SONIFICATION', 'FREQ_MIN')
-        self.FREQ_MAX = self.CONFIG.getfloat('SONIFICATION', 'FREQ_MAX')
-        self.MAX_TIME = self.CONFIG.getfloat('SONIFICATION', 'MAX_TIME')
+        self._retina_file = self._config.get('GAME', 'RETINA_FILE')
+        self._width = self._config.getint('GAME', 'WIDTH')
+        self._height = self._config.getint('GAME', 'HEIGHT')
+        self._fs = self._config.getint('SONIFICATION', 'FS')
+        self._amp = self._config.getfloat('SONIFICATION', 'AMP')
+        self._freq_min = self._config.getfloat('SONIFICATION', 'FREQ_MIN')
+        self._freq_max = self._config.getfloat('SONIFICATION', 'FREQ_MAX')
+        self._max_time = self._config.getfloat('SONIFICATION', 'MAX_TIME')
 
     def refresh(self):
         'Refreshing display and retina state'
-        self.RETINA.INPUT_FIELD = array2d(self.SCREEN)  # copy by value (see above)
-        for rf in self.RETINA.RF_LIST:
-            rf.INPUT_FIELD = self.RETINA.INPUT_FIELD    # updating rf copy by reference
-        self.RETINA.update()
+        self._retina._input_field = array2d(self._screen)  # copy by value (see above)
+        for rf in self._retina._rf_list:
+            rf._input_field = self._retina._input_field    # updating rf copy by reference
+        self._retina.update()
         pygame.display.update()
                 
     def get_image(self):
         'Dump a picture nfrom video capture'
-        im = highgui.cvQueryFrame(self.CAMERA)
+        im = highgui.cvQueryFrame(self._camera)
         return opencv.adaptors.Ipl2PIL(im)
     
     def t_func(self, data):
@@ -102,6 +102,6 @@ class TheWaveMachine(WavySoundGame):
                     
             im = self.t_func(self.get_image())
             pg_img = pygame.image.frombuffer(im.tostring(), im.size, im.mode)
-            self.SCREEN.blit(pg_img, (0,0))
+            self._screen.blit(pg_img, (0,0))
             self.refresh()
-            pygame.time.delay(int(1000 * 1.0/self.FPS))  
+            pygame.time.delay(int(1000 * 1.0/self._fps))  
