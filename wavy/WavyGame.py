@@ -95,7 +95,11 @@ class WavyGame(Thread):
     def display_INIT(self):
         "Setup the display system"
         pygame.display.init()
-        self._screen = pygame.display.set_mode((self._width, self._height), 0, 8)
+        if not self._gl:
+            self._screen = pygame.display.set_mode((self._width, self._height), 0, 8)
+        else:
+            self._screen = pygame.display.set_mode((self._width, self._height), pygame.OPENGL, 8)
+            
         pygame.display.set_caption(self._title)
         self._input_field = pixels2d(self._screen)
         
