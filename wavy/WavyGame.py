@@ -41,12 +41,14 @@ class WavyGame(Thread):
 
     Constructor :
     -------------
-    config_file : configuration file to be load (optionnal, default: None)
-    title       : Title to be displayed onto the window's caption
+    config_file   : configuration file to be load (optionnal, default: None)
+    title         : Title to be displayed onto the window's caption
+    gl            : is display surface set with OPENGL mode 
+    update_method : method to be used for dipsplay update ('update' or 'flip')
     '''
 
 
-    def __init__(self, config_file = None, title = 'Wavy Game Engine'):
+    def __init__(self, config_file = None, title = 'Wavy Game Engine', gl = False, update_method = 'update'):
         '''
         Constructor
         '''
@@ -59,6 +61,11 @@ class WavyGame(Thread):
         self._config = ConfigParser.RawConfigParser()
         self._config_file = config_file
         self._title = title
+        self._gl = gl
+        if self._gl:
+            self._update_method = 'flip'
+        else:
+            self._update_method = update_method
 
     def writeConfig(self):
         "Write the config file"
@@ -94,7 +101,10 @@ class WavyGame(Thread):
         
     def refresh(self):
         "Refresh screen and Retina"
-        pygame.display.update()
+        if self._update_method == 'update':
+            pygame.display.update()
+        else:
+            pygame.display.flip()
         self._retina.update()
 
     def init(self):

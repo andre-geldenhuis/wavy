@@ -143,7 +143,11 @@ class ReceptiveField(Thread):
         activity = 0.
         
         for cap in self._cap_list:
-            v = self._input_field[cap[0], cap[1]]
+            if self._retina._gl:
+                v = glReadPixels(cap[1], cap[0], 1, 1, GL_LUMINANCE, GL_FLOAT)
+                v = round(v * 255)
+            else:
+                v = self._input_field[cap[0], cap[1]]
             activity += v
 
         self._activity = self.t_func(activity / (255 * self._nbr_cap))
