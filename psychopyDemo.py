@@ -17,7 +17,7 @@ from wavy.psychopyIntegration import PsychopyWrapper
 def main():
     #create a window to draw in
     myWin = visual.Window((640,480), allowGUI=True, winType = 'pygame')
-    ppw = PsychopyWrapper(myWin.winHandle)
+    ppw = PsychopyWrapper(myWin.winHandle, gl = True)
 
     #INITIALISE SOME STIMULI
     grating1 = visual.PatchStim(myWin,mask="gauss",

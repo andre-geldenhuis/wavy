@@ -27,6 +27,8 @@ from __future__ import division
 from threading import Thread
 
 import pygame
+from OpenGL.GL import glReadPixels, GL_LUMINANCE, GL_FLOAT
+#from OpenGL.GLU import *
 import numpy as np
 
 
@@ -98,10 +100,12 @@ class Retina(Thread):
         "Return the number of Receptive Fields set into the retina"
         return self._nbr_rf
                           
-    def update(self):
-        "Update each Receptive Field and output them"
+    def update(self, mode = "array"):
+        """Update each Receptive Field and output them
+        mode can be etiher 'array' or 'gl'.
+        """
         for rf in self._rf_list:
-            rf.update()
+            rf.update(mode)
             rf.output()
 
 

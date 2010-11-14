@@ -41,7 +41,7 @@ class PsychopyWrapper(WavySoundGame):
         pass
 
     def refresh(self):
-        self._retina.update()
+        self._retina.update(mode = 'gl')
 
     def fetchConfig(self):
         "Simple implementation of fetch config method, should be overloaded"
