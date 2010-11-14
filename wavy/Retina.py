@@ -130,6 +130,7 @@ class ReceptiveField(Thread):
         self._retina = retina
         self._input_field = retina._input_field
         self._activity = 0.
+        self._gl = False
         
     def t_func(self, initial_activity):
         "Transfert function"
@@ -138,12 +139,15 @@ class ReceptiveField(Thread):
         else:
             return 0
 
-    def update(self):
-        "Update samples input accordingly to the numeric input <array>"
+    def update(self, mode = "array"):
+        """Update samples input accordingly to the numeric input <array>
+        mode : which mode is used to update activity state ('array' or 'gl')
+        """
+
         activity = 0.
         
         for cap in self._cap_list:
-            if self._retina._gl:
+            if mode == "gl":
                 v = glReadPixels(cap[1], cap[0], 1, 1, GL_LUMINANCE, GL_FLOAT)
                 v = round(v * 255)
             else:

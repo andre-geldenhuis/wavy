@@ -45,7 +45,7 @@ class PsychopyWrapper(WavySoundGame):
 
     def fetchConfig(self):
         "Simple implementation of fetch config method, should be overloaded"
-        self._retina_FILE = self._config.get('GAME', 'RETINA_FILE')
+        self._retina_file = self._config.get('GAME', 'RETINA_FILE')
         self._width = self._config.getint('GAME', 'WIDTH')
         self._height = self._config.getint('GAME', 'HEIGHT')
         self._fs = self._config.getint('SONIFICATION', 'FS')

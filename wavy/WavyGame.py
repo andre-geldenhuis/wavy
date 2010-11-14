@@ -105,11 +105,16 @@ class WavyGame(Thread):
         
     def refresh(self):
         "Refresh screen and Retina"
+
         if self._update_method == 'update':
             pygame.display.update()
         else:
             pygame.display.flip()
-        self._retina.update()
+
+        if self._gl:
+            self._retina.update("gl")
+        else:
+            self._retina.update()
 
     def init(self):
         "Generic init method"
