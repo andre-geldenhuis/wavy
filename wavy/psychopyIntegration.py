@@ -32,13 +32,13 @@ from WavyGame import WavySoundGame
 
 class PsychopyWrapper(WavySoundGame):
     
-    def __init__(self, win_handle, title = 'a test', config_file = './wavy.conf'):
-        super(WavySoundGame, self).__init__(config_file, title)
+    def __init__(self, win_handle, title = 'a test', config_file = './wavy.conf', gl = True):
+        super(WavySoundGame, self).__init__(config_file, title, gl)
         self._win_handle = win_handle
         self.init()
     
     def display_INIT(self):
-        self._input_field = pixels2d(self._win_handle)
+        pass
 
     def refresh(self):
         self._retina.update()
