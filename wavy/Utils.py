@@ -39,14 +39,14 @@ def viewRetina(file_name):
 	"Function plotting the content of a retina file"
 	assert HAS_MATPLOTLIB, 'matplotlib not installed !, chack your installation.'
 	retinaReader = Retina(file_name, ReceptiveField, None)
-	rf_list = retinaReader.RF_LIST
+	rf_list = retinaReader._rf_list
 	fig = plt.figure()
 	for rf in rf_list:
-		plt.plot(rf.X, rf.Y, '^k')
-		caps = rf.CAP_LIST
+		plt.plot(rf._x, rf._y, '^k')
+		caps = rf._cap_list
 		for cap in caps:
 			plt.plot(cap[0], cap[1], 'xr')
-			plt.plot([rf.X, cap[0]], [rf.Y, cap[1]], '--b')
+			plt.plot([rf._x, cap[0]], [rf._y, cap[1]], '--b')
 	plt.show()
 	return fig
 	
