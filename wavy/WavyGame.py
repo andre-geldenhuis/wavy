@@ -1,4 +1,4 @@
-#! -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 #    Copyright 2010, Nicolas Louveton <nblouveton@gmail.com>
 #
@@ -112,7 +112,7 @@ class WavyGame(Thread):
             pygame.display.flip()
 
         if self._gl:
-            self._retina.update("gl")
+            self._retina.update(gl_get = True)
         else:
             self._retina.update()
 

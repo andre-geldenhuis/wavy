@@ -1,4 +1,4 @@
-#! -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 #    Copyright 2010, Nicolas Louveton <nblouveton@gmail.com>
 #
@@ -28,7 +28,6 @@ from threading import Thread
 
 import pygame
 from OpenGL.GL import glReadPixels, GL_LUMINANCE, GL_FLOAT
-#from OpenGL.GLU import *
 import numpy as np
 
 
@@ -100,12 +99,12 @@ class Retina(Thread):
         "Return the number of Receptive Fields set into the retina"
         return self._nbr_rf
                           
-    def update(self, mode = "array"):
+    def update(self, gl_get = False):
         """Update each Receptive Field and output them
-        mode can be etiher 'array' or 'gl'.
+        gl_get is a boolean flag to specify if the video buffer have to be read from open gl.
         """
         for rf in self._rf_list:
-            rf.update(mode)
+            rf.update(gl_get)
             rf.output()
 
 
@@ -143,15 +142,15 @@ class ReceptiveField(Thread):
         else:
             return 0
 
-    def update(self, mode = "array"):
+    def update(self, gl_get = False):
         """Update samples input accordingly to the numeric input <array>
-        mode : which mode is used to update activity state ('array' or 'gl')
+        gl_get is a boolean flag to specify if the video buffer have to be read from open gl.
         """
 
         activity = 0.
         
         for cap in self._cap_list:
-            if mode == "gl":
+            if gl_get:
                 v = glReadPixels(cap[1], cap[0], 1, 1, GL_LUMINANCE, GL_FLOAT)
                 v = round(v * 255)
             else:
