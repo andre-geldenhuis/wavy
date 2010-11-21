@@ -56,7 +56,7 @@ class TheWaveMachine(WavySoundGame):
         self._fps = 22
         self.init()
 
-    def display_INIT(self):
+    def _display_init(self):
         'Initialize display'
         pygame.display.init()
         self._screen = pygame.display.set_mode((self._width, self._height), 0, 8)
@@ -64,8 +64,8 @@ class TheWaveMachine(WavySoundGame):
         self._input_field = array2d(self._screen) # surface locking prevent the use of array reference here
                                                 # using a copy method instead (performance loss)
     
-    def fetchConfig(self):
-        "fetchingConfig file according to WavySoundGame class audio paramters"
+    def _fetch_config(self):
+        "fetch_config file according to WavySoundGame class audio paramters"
         self._retina_file = self._config.get('GAME', 'RETINA_FILE')
         self._width = self._config.getint('GAME', 'WIDTH')
         self._height = self._config.getint('GAME', 'HEIGHT')
@@ -75,6 +75,15 @@ class TheWaveMachine(WavySoundGame):
         self._freq_max = self._config.getfloat('SONIFICATION', 'FREQ_MAX')
         self._max_time = self._config.getfloat('SONIFICATION', 'MAX_TIME')
 
+    def _t_func(self, data):
+        'Generic transfert method, implement an identity function here'
+        return data
+      
+    def _get_image(self):
+        'Dump a picture nfrom video capture'
+        im = highgui.cvQueryFrame(self._camera)
+        return opencv.adaptors.Ipl2PIL(im)
+          
     def refresh(self):
         'Refreshing display and retina state'
         self._retina._input_field = array2d(self._screen)  # copy by value (see above)
@@ -82,15 +91,6 @@ class TheWaveMachine(WavySoundGame):
             rf._input_field = self._retina._input_field    # updating rf copy by reference
         self._retina.update()
         pygame.display.update()
-                
-    def get_image(self):
-        'Dump a picture nfrom video capture'
-        im = highgui.cvQueryFrame(self._camera)
-        return opencv.adaptors.Ipl2PIL(im)
-    
-    def t_func(self, data):
-        'Generic transfert method, implement an identity function here'
-        return data
 
     def main(self):
         'Main method'
@@ -100,7 +100,7 @@ class TheWaveMachine(WavySoundGame):
                 if event.type == QUIT:
                     sys.exit(0)
                     
-            im = self.t_func(self.get_image())
+            im = self._t_func(self._get_image())
             pg_img = pygame.image.frombuffer(im.tostring(), im.size, im.mode)
             self._screen.blit(pg_img, (0,0))
             self.refresh()

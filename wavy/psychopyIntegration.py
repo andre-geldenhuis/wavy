@@ -37,14 +37,11 @@ class PsychopyWrapper(WavySoundGame):
         self._win_handle = win_handle
         self.init()
     
-    def display_INIT(self):
+    def _display_init(self):
         pass
 
-    def refresh(self):
-        self._retina.update(gl_get = True)
-
-    def fetchConfig(self):
-        "Simple implementation of fetch config method, should be overloaded"
+    def _fetch_config(self):
+        "Simple implementation of fetch_config method, should be overloaded"
         self._retina_file = self._config.get('GAME', 'RETINA_FILE')
         self._width = self._config.getint('GAME', 'WIDTH')
         self._height = self._config.getint('GAME', 'HEIGHT')
@@ -53,3 +50,6 @@ class PsychopyWrapper(WavySoundGame):
         self._freq_min = self._config.getfloat('SONIFICATION', 'FREQ_MIN')
         self._freq_max = self._config.getfloat('SONIFICATION', 'FREQ_MAX')
         self._max_time = self._config.getfloat('SONIFICATION', 'MAX_TIME')
+        
+    def refresh(self):
+        self._retina.update(gl_get = True)

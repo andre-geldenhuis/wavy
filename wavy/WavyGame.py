@@ -67,7 +67,7 @@ class WavyGame(Thread):
         else:
             self._update_method = update_method
 
-    def writeConfig(self):
+    def _write_config(self):
         "Write the config file"
         try:
             f = open(str(self._config_file), 'w')
@@ -78,12 +78,12 @@ class WavyGame(Thread):
         self._config.write(f)
         f.close()
 
-    def config_INI(self):
+    def _config_init(self):
         "Read the config file and fetch values"
         if self._config_file is not None:
             self._config.read(self._config_file)
             try:
-                self.fetchConfig()
+                self._fetch_config()
 
             except NotImplementedError:
                 print('fetchConfig is called without a correct implementation')
@@ -92,7 +92,7 @@ class WavyGame(Thread):
                 print('Unable to fetch config file : %s' % self._config_file)
                 exit(1)
     
-    def display_INIT(self):
+    def _display_init(self):
         "Setup the display system"
         pygame.display.init()
         if not self._gl:
@@ -102,7 +102,15 @@ class WavyGame(Thread):
             
         pygame.display.set_caption(self._title)
         self._input_field = pixels2d(self._screen)
-        
+
+    def _fetch_config(self):
+        "Generic method to fetch config file"
+        raise NotImplementedError
+                                  
+    def _retina_init(self):
+        "Generic method to setup Retina"
+        raise NotImplementedError
+                       
     def refresh(self):
         "Refresh screen and Retina"
 
@@ -120,14 +128,6 @@ class WavyGame(Thread):
         "Generic init method"
         raise NotImplementedError
     
-    def fetchConfig(self):
-        "Generic method to fetch config file"
-        raise NotImplementedError
-                                  
-    def retina_INIT(self):
-        "Generic method to setup Retina"
-        raise NotImplementedError
-               
     def main(self):
         raise NotImplementedError
     
@@ -147,19 +147,19 @@ class WavySoundGame(WavyGame):
         super(WavyGame, self).__init__(config_file, title)
         self._retina_file = None
         self._fs = None        # Audio parameters pre-init : required 
-        self._freq_min = None  # a properly implemented fetchConfig method is needed
+        self._freq_min = None  # a properly implemented _fetch_config method is needed
         self._freq_max = None
         self._amp = None
        
     def init(self):
         "General init: fetch config, setup retina, display and sound system"
-        self.config_INI()
-        self.display_INIT()
+        self._config_init()
+        self._display_init()
         self._retina = Retina(self._retina_file, SoundRF, self._input_field)
         pygame.mixer.pre_init(self._fs, -16, 2, 1024*4)
         pygame.mixer.init()
-        pygame.mixer.set_num_channels(self._retina.getNum_RF() * 2)
+        pygame.mixer.set_num_channels(self._retina.get_num_RF() * 2)
         rfs = self._retina._rf_list
         for rf in rfs:
-            rf.setAudioParams(self._freq_min, self._freq_max, self._max_time, \
+            rf.set_audio_params(self._freq_min, self._freq_max, self._max_time, \
                               self._amp, self._fs)

@@ -58,10 +58,10 @@ class Retina(Thread):
         self._rf_list = []
         self._rf_model = rf_model
         self._input_field = input_array
-        self.initRetina(file_name)
+        self._init_retina(file_name)
         self._nbr_rf = len(self._rf_list)
         
-    def initRetina(self, file_name):
+    def _init_retina(self, file_name):
         "Read the retina file and setup all Receptive Fields according to retina file data's"
         try:
             fRetina = open(str(file_name), 'r')
@@ -101,7 +101,7 @@ class Retina(Thread):
             self._rf_list.append(rf)
             c1 += 2                    
 
-    def getNum_RF(self):
+    def get_num_RF(self):
         "Return the number of Receptive Fields set into the retina"
         return self._nbr_rf
                           
@@ -141,7 +141,7 @@ class ReceptiveField(Thread):
         self._activity = 0.
         self._gl = False
         
-    def t_func(self, initial_activity):
+    def _t_func(self, initial_activity):
         "Transfert function"
         if initial_activity > self._threshold:
             return initial_activity
@@ -163,7 +163,7 @@ class ReceptiveField(Thread):
                 v = self._input_field[cap[0], cap[1]]
             activity += v
 
-        self._activity = self.t_func(activity / (255 * self._nbr_cap))
+        self._activity = self._t_func(activity / (255 * self._nbr_cap))
         self.output()
 
     def output(self):
@@ -203,7 +203,14 @@ class SoundRF(ReceptiveField):
         self._sound = None
         self._chnl = None
         
-    def setAudioParams(self, freq_min, freq_max, max_time, amp = 10000, fs = 44100):
+    def _make_sinwave(self, tone):
+        "Create a sinewave to be output"
+        sinewave = np.array(self._amp * np.sin(tone * np.pi * np.arange(0, self._max_time, 1/self._fs)), dtype = np.int16)
+        if self._nb_chans == 2:
+            sinewave = np.array([sinewave]*2, dtype = np.int16)
+        return sinewave
+        
+    def set_audio_params(self, freq_min, freq_max, max_time, amp = 10000, fs = 44100):
         "Setup audio paramters for the Receptive Field instance. This is an example, should be overloaded."
         self._freq_span = freq_max - freq_min
         self._max_time = max_time
@@ -211,19 +218,12 @@ class SoundRF(ReceptiveField):
         self._fs = fs
         self._tone = freq_max - (self._y / self._retina._y_size * self._freq_span)
         self._pan = [.5 + (.5 - float(self._x)/self._retina._x_size), .5 + (float(self._x)/self._retina._x_size - .5)]
-        self._sine = self.mkSineWave(self._tone)
+        self._sine = self._make_sinwave(self._tone)
         self._sound = pygame.sndarray.make_sound(self._sine.T)
         self._chnl = pygame.mixer.find_channel()
         self._chnl.play(self._sound, loops = -1)
         self._chnl.set_volume(0, 0)
-        print('RF object inited - x: %d, y: %d, on %s' % (self._x, self._y, self._chnl))
-
-    def mkSineWave(self, tone):
-        "Create a sinewave to be output"
-        sinewave = np.array(self._amp * np.sin(tone * np.pi * np.arange(0, self._max_time, 1/self._fs)), dtype = np.int16)
-        if self._nb_chans == 2:
-            sinewave = np.array([sinewave]*2, dtype = np.int16)
-        return sinewave
+        # print('RF object inited - x: %d, y: %d, on %s' % (self._x, self._y, self._chnl))
         
     def output(self):
         "Sound output method"
