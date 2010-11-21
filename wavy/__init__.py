@@ -17,10 +17,9 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Wavy.  If not, see <http://www.gnu.org/licenses/>.
 
-_VERSION = '0.9'
 
 try:
-    import psycho
-    psycho.full()
+    import psyco
+    psyco.full()
 except ImportError:
-    print('No Just in Time (psyco) compiler found.')
+    print('Wavy : No Just in Time (psyco) compiler found.')
