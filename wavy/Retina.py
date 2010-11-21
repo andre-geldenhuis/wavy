@@ -27,8 +27,14 @@ from __future__ import division
 from threading import Thread
 
 import pygame
-from OpenGL.GL import glReadPixels, GL_LUMINANCE, GL_FLOAT
 import numpy as np
+
+try:
+    from OpenGL.GL import glReadPixels, GL_LUMINANCE, GL_FLOAT
+except ImportError:
+    HAS_GL = False
+else:
+    HAS_GL = True
 
 
 class Retina(Thread):
@@ -151,10 +157,10 @@ class ReceptiveField(Thread):
         
         for cap in self._cap_list:
             if gl_get:
-                v = glReadPixels(cap[1], cap[0], 1, 1, GL_LUMINANCE, GL_FLOAT)
+                v = glReadPixels(cap[0], cap[1], 1, 1, GL_LUMINANCE, GL_FLOAT)
                 v = round(v * 255)
             else:
-                v = self._input_field[cap[1], cap[0]]
+                v = self._input_field[cap[0], cap[1]]
             activity += v
 
         self._activity = self.t_func(activity / (255 * self._nbr_cap))
