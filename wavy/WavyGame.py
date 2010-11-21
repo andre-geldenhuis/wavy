@@ -31,6 +31,13 @@ import ConfigParser
 import pygame
 from pygame.surfarray import pixels2d
 
+try:
+    from OpenGL.GL import glReadPixels, GL_LUMINANCE, GL_FLOAT
+except ImportError:
+    HAS_GL = False
+else:
+    HAS_GL = True
+
 from Retina import Retina, SoundRF
 
 
@@ -63,6 +70,7 @@ class WavyGame(Thread):
         self._title = title
         self._gl = gl
         if self._gl:
+            assert HAS_GL, 'No OpenGL package found !'
             self._update_method = 'flip'
         else:
             self._update_method = update_method
