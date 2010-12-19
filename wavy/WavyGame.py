@@ -94,19 +94,28 @@ class WavyGame(Thread):
                 self._fetch_config()
 
             except NotImplementedError:
-                print('fetchConfig is called without a correct implementation')
+                print('ERROR !\nfetchConfig is called without a correct implementation')
+                exit(1)
 
             except IOError:
-                print('Unable to fetch config file : %s' % self._config_file)
+                print('ERROR !\nUnable to fetch config file : %s' % self._config_file)
                 exit(1)
     
     def _display_init(self):
         "Setup the display system"
         pygame.display.init()
-        if not self._gl:
-            self._screen = pygame.display.set_mode((self._width, self._height), 0, 8)
-        else:
-            self._screen = pygame.display.set_mode((self._width, self._height), pygame.OPENGL, 8)
+        try:
+            if not self._gl:
+                self._screen = pygame.display.set_mode((self._width, self._height), 0, 8)
+        
+            else:
+                self._screen = pygame.display.set_mode((self._width, self._height), pygame.OPENGL, 8)
+
+        except TypeError:
+            print('ERROR !\nInteger value expected :')
+            print('width given : %s' % type(self._width))
+            print('height given : %s' % type(self._height))
+            exit(1)
             
         pygame.display.set_caption(self._title)
         self._input_field = pixels2d(self._screen)

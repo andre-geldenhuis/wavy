@@ -30,7 +30,7 @@ class PointingGame(WavySoundGame):
         super(WavySoundGame, self).__init__(config_file, title)
         self.init()
     
-    def fetchConfig(self):
+    def _fetch_config(self):
         "Simple implementation of fetch config method, should be overloaded"
         self._retina_file = self._config.get('GAME', 'RETINA_FILE')
         self._width = self._config.getint('GAME', 'WIDTH')
