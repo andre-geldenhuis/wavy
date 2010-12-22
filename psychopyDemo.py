@@ -12,12 +12,12 @@ from psychopy import *
 
 from numpy import sum
 
-from wavy.psychopyIntegration import PsychopyWrapper
+from wavy.Extern import ExternalWrapper
 
 def main():
     #create a window to draw in
     myWin = visual.Window((640,480), allowGUI=True, winType = 'pygame')
-    ppw = PsychopyWrapper(myWin.winHandle, gl = True)
+    ppw = ExternalWrapper(myWin.winHandle, gl = True)
 
     #INITIALISE SOME STIMULI
     grating1 = visual.PatchStim(myWin,mask="gauss",
