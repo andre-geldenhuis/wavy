@@ -159,7 +159,7 @@ class WavySoundGame(WavyGame):
     title       : Title to be displayed onto the window's caption
     '''
 
-    def __init__(self, config_file, title = 'Wavy Game Engine', , gl = False, update_method = 'update'):
+    def __init__(self, config_file, title = 'Wavy Game Engine', gl = False, update_method = 'update'):
         "Constructor"
         super(WavyGame, self).__init__(config_file, title, gl = False, update_method = 'update')
         self._retina_file = None
