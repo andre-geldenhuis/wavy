@@ -1,9 +1,5 @@
 #! /usr/bin/env python
 
-# This code is a simple OpenGL example code from :
-# http://www.willmcgugan.com/blog/tech/2007/6/4/opengl-sample-code-for-pygame/
-# written by Will McGugan and distibuted without explicit license
-# There is few modifications added to this file in order to work with Wavy
 
 SCREEN_SIZE = (800, 600)
 
@@ -208,11 +204,9 @@ def run():
         elif pressed[K_DOWN]:
             rotation_direction.x = +1.0
         if pressed[K_z]:
-            pass
-            #rotation_direction.z = -1.0
+            rotation_direction.z = -1.0
         elif pressed[K_x]:
-            pass
-            #rotation_direction.z = +1.0            
+            rotation_direction.z = +1.0            
         if pressed[K_q]:
             movement_direction.z = -1.0
         elif pressed[K_a]:
