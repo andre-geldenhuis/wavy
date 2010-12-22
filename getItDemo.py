@@ -13,8 +13,8 @@ from wavy.WavyGame import WavySoundGame
 
 class getItGame(WavySoundGame):
     
-    def __init__(self, title = 'a test', config_file = './wavy.conf'):
-        super(WavySoundGame, self).__init__(config_file, title)
+    def __init__(self, title = 'a test', config_file = './wavy.conf', gl = False, update_method = 'update'):
+        super(WavySoundGame, self).__init__(config_file, title, gl, update_method)
         self.init()
     
     def _fetch_config(self):
