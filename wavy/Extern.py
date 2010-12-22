@@ -50,6 +50,7 @@ class ExternalWrapper(WavySoundGame):
         self._freq_min = self._config.getfloat('SONIFICATION', 'FREQ_MIN')
         self._freq_max = self._config.getfloat('SONIFICATION', 'FREQ_MAX')
         self._max_time = self._config.getfloat('SONIFICATION', 'MAX_TIME')
+        self._flip_y = self._config.getboolean('SONIFICATION', 'FLIP_Y')
         
     def refresh(self):
         self._retina.update(gl_get = True)

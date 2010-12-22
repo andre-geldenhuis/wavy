@@ -179,4 +179,4 @@ class WavySoundGame(WavyGame):
         rfs = self._retina._rf_list
         for rf in rfs:
             rf.set_audio_params(self._freq_min, self._freq_max, self._max_time, \
-                              self._amp, self._fs)
+                              self._amp, self._fs, flip_y = self._flip_y)

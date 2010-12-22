@@ -204,14 +204,18 @@ class SoundRF(ReceptiveField):
             sinewave = np.array([sinewave]*2, dtype = np.int16)
         return sinewave
         
-    def set_audio_params(self, freq_min, freq_max, max_time, amp = 10000, fs = 44100):
+    def set_audio_params(self, freq_min, freq_max, max_time, amp = 10000, fs = 44100, flip_y = False):
         "Setup audio paramters for the Receptive Field instance. This is an example, should be overloaded."
         self._freq_span = freq_max - freq_min
         self._max_time = max_time
         self._amp = amp
         self._fs = fs
-        self._tone = freq_max - (self._y / self._retina._y_size * self._freq_span)
-        self._pan = [.5 + (.5 - float(self._x)/self._retina._x_size), .5 + (float(self._x)/self._retina._x_size - .5)]
+        if not flip_y:
+            self._tone = freq_max - (self._y / self._retina._y_size * self._freq_span)
+        else:
+            self._tone = freq_min + (self._y / self._retina._y_size * self._freq_span)
+
+        self._pan = [.5 + (.5 - float(self._x)/self._retina._x_size), .5 + (float(self._x)/self._retina._x_size - .5)]   
         self._sine = self._make_sinwave(self._tone)
         self._sound = pygame.sndarray.make_sound(self._sine.T)
         self._chnl = pygame.mixer.find_channel()
