@@ -63,18 +63,6 @@ class TheWaveMachine(WavySoundGame):
         pygame.display.set_caption(self._title)
         self._input_field = array2d(self._screen) # surface locking prevent the use of array reference here
                                                 # using a copy method instead (performance loss)
-    
-    def _fetch_config(self):
-        "fetch_config file according to WavySoundGame class audio paramters"
-        self._retina_file = self._config.get('GAME', 'RETINA_FILE')
-        self._width = self._config.getint('GAME', 'WIDTH')
-        self._height = self._config.getint('GAME', 'HEIGHT')
-        self._fs = self._config.getint('SONIFICATION', 'FS')
-        self._amp = self._config.getfloat('SONIFICATION', 'AMP')
-        self._freq_min = self._config.getfloat('SONIFICATION', 'FREQ_MIN')
-        self._freq_max = self._config.getfloat('SONIFICATION', 'FREQ_MAX')
-        self._max_time = self._config.getfloat('SONIFICATION', 'MAX_TIME')
-        self._flip_y = self._config.getfloat('SONIFICATION', 'FLIP_Y')
 
     def _t_func(self, data):
         'Generic transfert method, implement an identity function here'
