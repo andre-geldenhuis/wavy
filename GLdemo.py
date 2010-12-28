@@ -1,12 +1,16 @@
 #! /usr/bin/env python
-
+# see CREDITS file for more details
 
 SCREEN_SIZE = (800, 600)
 
 from math import radians 
 
-from OpenGL.GL import *
-from OpenGL.GLU import *
+try:
+    from OpenGL.GL import *
+    from OpenGL.GLU import *
+except ImportError:
+    print("openGL binding for python not available on this computer !!!")
+    exit(1)
 
 import pygame
 from pygame.locals import *
@@ -14,7 +18,8 @@ from pygame.locals import *
 from GLdemo.matrix44 import *
 from GLdemo.vector3 import *
 
-from wavy.Extern import ExternalWrapper
+from wavy.WavyGame import ExternalWrapper
+
 
 def resize(width, height):
     
@@ -151,7 +156,7 @@ def run():
     
     pygame.init()
     screen = pygame.display.set_mode(SCREEN_SIZE, HWSURFACE|OPENGL|DOUBLEBUF, 8)
-    wg = ExternalWrapper(screen, title = 'gl_example')
+    wg = ExternalWrapper(screen, gl = True, title = 'gl_example')
 
     resize(*SCREEN_SIZE)
     init()

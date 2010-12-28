@@ -180,3 +180,28 @@ class WavySoundGame(WavyGame):
         for rf in rfs:
             rf.set_audio_params(self._freq_min, self._freq_max, self._max_time, \
                               self._amp, self._fs, flip_y = self._flip_y)
+
+    def _fetch_config(self):
+        "Simple implementation of fetch_config method, should be overloaded"
+        self._retina_file = self._config.get('GAME', 'RETINA_FILE')
+        self._width = self._config.getint('GAME', 'WIDTH')
+        self._height = self._config.getint('GAME', 'HEIGHT')
+        self._fs = self._config.getint('SONIFICATION', 'FS')
+        self._amp = self._config.getfloat('SONIFICATION', 'AMP')
+        self._freq_min = self._config.getfloat('SONIFICATION', 'FREQ_MIN')
+        self._freq_max = self._config.getfloat('SONIFICATION', 'FREQ_MAX')
+        self._max_time = self._config.getfloat('SONIFICATION', 'MAX_TIME')
+        self._flip_y = self._config.getboolean('SONIFICATION', 'FLIP_Y')
+
+
+class ExternalWrapper(WavySoundGame):
+    '''External wrapper use an external surface for sonification instead of a specific display. 
+    Referenbce to a numpy array is requiered if opengl mode is false
+'''
+    def __init__(self, field_handle, gl, title = 'a test', config_file = './wavy.conf'):
+        super(WavySoundGame, self).__init__(config_file, title, gl)
+        self._field_handle = field_handle
+        self.init()
+    
+    def _display_init(self):
+        pass
