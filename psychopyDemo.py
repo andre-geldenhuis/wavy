@@ -8,11 +8,14 @@ from math import sqrt
 import pygame
 from pygame.locals import *
 from pygame.surfarray import array2d, pixels2d
-from psychopy import *
 
-from numpy import sum
+try:
+    from psychopy import *
+except ImportError:
+    print("PsychoPy not available on this system !!!")
+    exit(1)
 
-from wavy.Extern import ExternalWrapper
+from wavy.WavyGame import ExternalWrapper
 
 def main():
     #create a window to draw in

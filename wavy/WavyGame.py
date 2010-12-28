@@ -196,12 +196,21 @@ class WavySoundGame(WavyGame):
 
 class ExternalWrapper(WavySoundGame):
     '''External wrapper use an external surface for sonification instead of a specific display. 
-    Referenbce to a numpy array is requiered if opengl mode is false
-'''
+    Referenbce to a numpy array is requiered if opengl mode is false'''
+
     def __init__(self, field_handle, gl, title = 'a test', config_file = './wavy.conf'):
         super(WavySoundGame, self).__init__(config_file, title, gl)
         self._field_handle = field_handle
         self.init()
     
     def _display_init(self):
+        "No display init in this class must be done outside"
         pass
+
+    def refresh(self):
+        "Refresh screen and Retina without refreshing surface (done outside)"
+
+        if self._gl:
+            self._retina.update(gl_get = True)
+        else:
+            self._retina.update()
