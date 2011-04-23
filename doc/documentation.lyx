@@ -67,6 +67,11 @@
 Sensory substitution library for playing and experimenting 
 \end_layout
 
+\begin_layout Standard
+\align center
+version = draft, 28 december 2010
+\end_layout
+
 \begin_layout Section
 Introduction
 \end_layout
@@ -124,41 +129,39 @@ http://en.wikipedia.org/wiki/Sensory_substitution
 Wavy is primarily intended to be a visual-to-sound substitution system.
  However it is designed to be an easily extendable framework in order to
  develop other types of sensory substitution system.
-\begin_inset Newline newline
+ Wavy main goals are :
+\end_layout
+
+\begin_layout Enumerate
+
+\size larger
+using an agile and multi-platform language (python)
+\end_layout
+
+\begin_layout Enumerate
+
+\size larger
+developping a general and flexible framework for sensory substitution
+\end_layout
+
+\begin_layout Enumerate
+
+\size larger
+to be used in various contexts (gaming, scientific research, R&D, assistance
+ system
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ldots
+\end_layout
+
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-
-\size larger
-So what's the difference with Wavy and why another sensory substitution
- package ? Others sensory substitution systems are coded in C/C++ or Java
- programming language and are designed to be used as an end user application.
- Instead, Wavy is designed as a framework to develop new ideas in the sensory
- substitution field.
- Main goals are
-\end_layout
-
-\begin_layout Enumerate
-
-\size larger
-using an agile and multi-platform language
-\end_layout
-
-\begin_layout Enumerate
-
-\size larger
-developping a general framework for sensory substitution with great extendable
- capabilities
-\end_layout
-
-\begin_layout Enumerate
-
-\size larger
-to be very flexible in context of usage (gaming, scientific research, R&D
- or why not real life)
+)
 \end_layout
 
 \begin_layout Standard
@@ -175,8 +178,8 @@ to be very flexible in context of usage (gaming, scientific research, R&D
 \size larger
 Python was choose for its ability to be very powerfull and extensible.
  It favorise experimentation and rapid developpment of new ideas/features.
- It provide a large collection of quality standard and third-party packages
- in many fields (GUI, games, numerical computation etc.).
+ It provide a large collection of standard and third-party packages in many
+ fields (GUI, games, numerical computation etc.).
  After prototyping, code can be profiled and bottlnecks could be moved in
  C/C++ code.
 \end_layout
@@ -188,7 +191,7 @@ Quick start
 \begin_layout Standard
 
 \size larger
-You can easily start using wavy :
+You can easily start a demo using wavy :
 \end_layout
 
 \begin_layout Enumerate
@@ -200,36 +203,30 @@ Unpack archive
 \begin_layout Enumerate
 
 \size larger
-run a game demo (*Demo.py files)
+run a game demo (*demo.py files)
 \end_layout
 
 \begin_layout Standard
 
 \size larger
-You can also run theWave which sonify a webcam input (obviously, need a
- webcam).
-
-\emph on
- 
+You can also run theWave which sonify a webcam input (a webcam is requiered)
 \series bold
-Please check your Python installation, see installation section bellow for
- more details.
+\emph on
+.
 \end_layout
 
 \begin_layout Section
 Installation
 \end_layout
 
+\begin_layout Subsection
+Setup
+\end_layout
+
 \begin_layout Standard
 
 \size larger
-If you just want to play with Wavy, the easier solution is to unpack the
- content of the archive and run provided toys programs (like test.py for
- example).
- Instead, if you want to use Wavy in a more flexible manner, or within a
- developpment perspective it's better to install properly the Wavy package
- in your Python environment.
- In this case, please follow these steps : 
+To install properly wavy on your system, please follow these steps : 
 \end_layout
 
 \begin_layout Enumerate
@@ -241,30 +238,18 @@ unpack the archive
 \begin_layout Enumerate
 
 \size larger
-run "python setup.py install" command in a terminal from the src directory.
- Please see the distutils documentation online for more details on this
- command.
- 
+run "python setup.py install" command in a terminal from the root directory.
+\end_layout
+
+\begin_layout Subsection
+System requierements
 \end_layout
 
 \begin_layout Standard
 
 \size larger
-\begin_inset VSpace medskip
-\end_inset
-
- System requierment :
-\begin_inset Newline newline
-\end_inset
-
- Wavy is intended to be cross-platform.
- You need : 
-\end_layout
-
-\begin_layout Itemize
-
-\size larger
-a python standard installation (see availability : 
+Wavy is intended to be cross-platform.
+ Check the availability of a Python environment for your system : 
 \begin_inset Flex URL
 status collapsed
 
@@ -275,7 +260,17 @@ http://www.python.org/download/
 
 \end_inset
 
-) 
+.
+\begin_inset Newline newline
+\end_inset
+
+What it is necessary : 
+\end_layout
+
+\begin_layout Itemize
+
+\size larger
+a python standard installation (>= 2.5 and <3.0) 
 \end_layout
 
 \begin_layout Itemize
@@ -290,22 +285,67 @@ Numpy library
 pyGame library
 \end_layout
 
+\begin_layout Standard
+
+\size larger
+If you want to use Wavy in specific context :
+\end_layout
+
 \begin_layout Itemize
 
 \size larger
-use with webcam : openCV binding for python 
+use with webcams : openCV binding for python
+\end_layout
+
+\begin_layout Itemize
+
+\size larger
+use with 3D graphics : openGL binding for python
+\end_layout
+
+\begin_layout Itemize
+
+\size larger
+use with scientific experiments : psychopy software properly installed
 \end_layout
 
 \begin_layout Section
-Description
+Overview
 \end_layout
 
 \begin_layout Subsection
 The Retina and ReceptiveField clases
 \end_layout
 
+\begin_layout Standard
+
+\size larger
+Retina object is the core of the sensory substitution system.
+ It is composed of several receptive fields which determine the layout of
+ the spatial sampling and define the way the output is done.
+ At each times, the substitution is realised from an input field (usually
+ a numpy array or a reference to a numpy array), representing input data
+ stream, according to all (simultaneously) receptive fields setup into the
+ Retina.
+ Retina initialization depend on a retina file, usually a wavy.ret text file
+ which can be constructed using Utils.py methods (an example is available
+ in the data directory, see Utils.py self documentation for more details)
+ and others parameters related to the output (see WavyGame class section).
+\end_layout
+
 \begin_layout Subsection
 The WavyGame class
+\end_layout
+
+\begin_layout Standard
+
+\size larger
+This class is a general wrapper which aims to help you constucting new sensory
+ substitution software.
+ It manage all step needed to setup the sensory substitution system, initialize
+ display, fecthing configuration file and so on, accodringly to your purpose.
+ It rely on a configuration file, usually : wavy.conf but another could be
+ specified (an example is available in the data directory).
 \end_layout
 
 \end_body

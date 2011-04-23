@@ -2,15 +2,15 @@
 # -*- coding: utf-8 -*-
 
 '''
-PointingGame is an example of sensory substitution game (or experiment) made possible
-by wavy.
-
-The game make appearing a white circle on the screen. The user can move over the screen
-a similar white circle and have to put it above the later one. Whene he/she think it's
-he have to push escape button to record its performance and the same task appear again.
-
-This application can be used to assess learning curve and favorise learning progression 
-of a senosry substitution system.  
+PointingGame is an example of sensory substitution
+game (or experiment) made possible by wavy.
+The game make appearing a white circle on the
+screen. The user can move over the screen a similar
+white circle and have to put it above the later one.
+Whene he/she think it's he have to push escape button
+to record its performance and the same task appear again.
+This application can be used to assess learning curve and
+favorise learning progression  of a senosry substitution system.  
 '''
 
 from __future__ import division

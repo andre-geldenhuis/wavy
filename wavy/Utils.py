@@ -36,7 +36,7 @@ from Retina import Retina, ReceptiveField
 
 
 def viewRetina(file_name):
-	"Function plotting the content of a retina file"
+	"Visualizing a retina file"
 	assert HAS_MATPLOTLIB, 'matplotlib not installed !, chack your installation.'
 	retinaReader = Retina(file_name, ReceptiveField, None)
 	rf_list = retinaReader._rf_list
@@ -79,7 +79,7 @@ def writeRetina(x_size, y_size, rf_list, cap_list, name = 'retina.ret'):
 
 
 def LinearGridRetina(x_size, y_size, x_res, y_res, nbr_cap, sd_cap):
-	"""Builder a linear sampling retina with lineary positionned receptivefields
+	"""Build a linear sampling retina with lineary positionned receptivefields
 	x_size, y_size  : retina's size
 	x_res, y_res    : xy resolution
 	nbr_cap         : number of captors
@@ -115,7 +115,7 @@ def LinearGridRetina(x_size, y_size, x_res, y_res, nbr_cap, sd_cap):
 
 
 def LinearRandomRetina(x_size, y_size, nbr_rf, nbr_cap, sd_cap):
-	"""Builder a linear sampling retina with randomly positionned receptivefields
+	"""Build a linear sampling retina with randomly positionned receptivefields
 	x_size, y_size   : retina's size
 	nbr_rf           : number of receptive fields
 	nbr_cap          : number of captors

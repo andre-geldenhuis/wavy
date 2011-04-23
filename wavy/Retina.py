@@ -20,8 +20,10 @@
 '''
 This module contain classes needed to build a sensosry substitution system.
 Retina - genral container and control object
-ReceptiveField - sampling unit
+ReceptiveField - abstract sampling unit
+SoundRF - Sonification specialized sampling unit
 '''
+
 from __future__ import division
 
 from threading import Thread

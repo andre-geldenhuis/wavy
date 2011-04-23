@@ -18,7 +18,8 @@
 #    along with Wavy.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-This module contain template classes to make sensury substitution system building easier.
+This module contain template classes to make sensury substitution
+system building easier. 
 WavyGame - a general class
 WavySoundGame - an easy to use visual-to-sound classe
 '''

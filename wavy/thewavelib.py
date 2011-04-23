@@ -18,9 +18,10 @@
 #    along with Wavy.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-theWave is a sensory substitution system to be used with a digital camera like an usb webcam.
-The visual-to-sound substitution is performed onto the picture captured by the digital camera.
-The input pictures are also displayed on the screen in real time.
+theWave is a sensory substitution system to be used with a digital camera
+like an usb webcam. The visual-to-sound substitution is performed onto
+the picture captured by the digital camera. The input pictures are also
+displayed on the screen at real time.
 '''
 
 from __future__ import division
