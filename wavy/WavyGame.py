@@ -22,6 +22,7 @@ This module contain template classes to make sensury substitution
 system building easier. 
 WavyGame - a general class
 WavySoundGame - an easy to use visual-to-sound classe
+ExternalWrapper - a class to handle arbitrary external input
 '''
 
 from __future__ import division
