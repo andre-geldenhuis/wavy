@@ -30,8 +30,13 @@ from threading import Thread
 
 import pygame
 import numpy as np
-from OpenGL.GL import glReadPixels, GL_LUMINANCE, GL_FLOAT
 
+try:
+    from OpenGL.GL import glReadPixels, GL_LUMINANCE, GL_FLOAT
+except ImportError:
+    HAS_GL = False
+else:
+    HAS_GL = True
 
 class Retina(Thread):
     '''
