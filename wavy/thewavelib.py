@@ -43,15 +43,17 @@ from WavyGame import WavySoundGame
 
 class TheWaveMachine(WavySoundGame):
     '''
-    TheWaveMachine < is a WavySoundGame sub-class.
-    It is a visual-to-sound sensory substitution system for digital camera devices.
-    It take no argument to be inited.
-    It rely on the < wavy.conf > config file which must be in the same directory.
-    There is one < main > method to be called in order to start system.
+    TheWaveMachine is a WavySoundGame sub-class.
+    theWave object is started by calling its main method
     '''
 
-    def __init__(self):
-        'Constructor'
+    def __init__(self,cam = 0, fps = 22):
+        '''
+        Constructor:
+        ------------
+        cam	: digita device id (default = 0)
+        fps	: frame per seconds to be sampled (default = 22)
+        '''
         super(WavySoundGame, self).__init__('wavy.conf', 'theWave')
         self._camera = highgui.cvCreateCameraCapture(0)
         self._fps = 22
@@ -70,7 +72,7 @@ class TheWaveMachine(WavySoundGame):
         return data
       
     def _get_image(self):
-        'Dump a picture nfrom video capture'
+        'Dump a picture array from video buffer'
         im = highgui.cvQueryFrame(self._camera)
         return opencv.adaptors.Ipl2PIL(im)
           
