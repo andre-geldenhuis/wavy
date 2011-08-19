@@ -1,0 +1,8 @@
+CREDITS
+
+* GLdemo :
+----------
+GLdemo code is an adaptation of original openGL demo code by Will McGugan.
+The original code was release without any explicit license and was available
+at:
+http://www.willmcgugan.com/blog/tech/2007/6/4/opengl-sample-code-for-pygame/
