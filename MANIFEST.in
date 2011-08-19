@@ -1,0 +1,6 @@
+include README.txt
+include setup.py 
+include LICENSE.txt
+include *.py
+recursive-include wavy *
+recursive-include GLdemo *
