@@ -18,10 +18,10 @@
 #    along with Wavy.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-This module contain classes needed to build a sensosry substitution system.
-Retina - genral container and control object
-ReceptiveField - abstract sampling unit
-SoundRF - Sonification specialized sampling unit
+This module contain classes needed to build a minimal sensosry substitution system.
+Retina         - Genral container, control input sampling and output
+ReceptiveField - Unitary area of input to be sampled 
+SoundRF        - Sonification oriented ReceptiveField
 '''
 
 from __future__ import division
@@ -38,21 +38,22 @@ except ImportError:
 else:
     HAS_GL = True
 
+
 class Retina(Thread):
     '''
     Retina class is the core of the sensory substitution system.
-    It carry out sampling on an INPUT_FIELD (numpy array), compute new value for each receptive-fields
+    It carry out sampling from an INPUT_FIELD (numpy array), compute new activity for each receptive fields
     and call ReceptiveFields' output method.
-
-    Constructor :
-    -------------
-    file_name     : file name of the retina file which contain sampling parameters
-    rf_model      : ReceptiveField class to use in sensory substitution
-    input_array   : numeric array to be sampled (numpy array)
     '''
     
     def __init__(self, file_name, rf_model, input_array):
-        "Constructor"
+        '''
+        Constructor :
+        -------------
+        file_name     : file name of the retina file which contain sampling parameters
+        rf_model      : ReceptiveField class to be used in sensory substitution process
+        input_array   : numeric array to be sampled (numpy array)
+        '''
         Thread.__init__(self)
         self._x_size = None
         self._y_size = None
@@ -63,7 +64,7 @@ class Retina(Thread):
         self._nbr_rf = len(self._rf_list)
         
     def _init_retina(self, file_name):
-        "Read the retina file and setup all Receptive Fields according to retina file data's"
+        "Read the retina file and setup all Receptive Fields according to retina file's data"
         try:
             fRetina = open(str(file_name), 'r')
             
@@ -107,9 +108,10 @@ class Retina(Thread):
         return self._nbr_rf
                           
     def update(self, gl_get = False):
-        """Update each Receptive Field and output them
-        gl_get is a boolean flag to specify if the video buffer have to be read from open gl.
-        """
+        '''
+        Update each Receptive Field and output them
+        gl_get is a boolean flag to specify if the video buffer have to be read from openGL buffer.
+        '''
         for rf in self._rf_list:
             rf.update(gl_get)
             rf.output()
@@ -120,17 +122,17 @@ class ReceptiveField(Thread):
     A Receptive Field object is a part of a Retina.
     It is defined by its position and a list of captor sampling the Retina's INPUT_FIELD
     *** The output method must be implemented ***
-
-    Constructor :
-    -------------
-    x, y      : (x, y) position of the ReceptiveField
-    cap_list  : captors list
-    retina    : instancied Retina reference
-    treshold  : treshold parameter [0 ; 255]
     '''
     
     def __init__(self, x, y, cap_list, retina, threshold = 0):
-        "Constructor"
+        '''
+        Constructor :
+        -------------
+        x, y      : (x, y) position of the ReceptiveField
+        cap_list  : captors list
+        retina    : reference of a retina instance
+        treshold  : treshold parameter [0; 255]
+        '''
         Thread.__init__(self)
         self._x = x
         self._y = y
@@ -143,16 +145,17 @@ class ReceptiveField(Thread):
         self._gl = False
         
     def _t_func(self, initial_activity):
-        "Transfert function"
+        "Threshold transfert function"
         if initial_activity > self._threshold:
             return initial_activity
         else:
             return 0
 
     def update(self, gl_get = False):
-        """Update samples input accordingly to the numeric input <array>
-        gl_get is a boolean flag to specify if the video buffer have to be read from open gl.
-        """
+        '''
+        Update samples input accordingly to the retina's input field <numpy array>
+        gl_get is a boolean flag to specify if the video buffer have to be read from openGL buffer.
+        '''
 
         activity = 0.
         
@@ -168,30 +171,29 @@ class ReceptiveField(Thread):
         self.output()
 
     def output(self):
-        "Generic output method"
+        "Abstract output method"
         raise NotImplementedError
         
         
 class SoundRF(ReceptiveField):
     '''
-    SoundRF is a class implementing a Sound output ReceptiveField class.
-    As a ReceptiveField derivative it take place as part of a Retina.
-    It is define by its position and a list of captor sampling the Retina's INPUT_FIELD.
-
-    Constructor :
-    -------------
-    same as ReceptiveField class
-
-    Audio parameters :
-    ------------------
-    freq_min, freq_max : frequency span
-    max_time           : playing time in seconds
-    amp                : amplitude factor
-    fs                 : sampling frequence
+    SoundRF is a class implementing an audio output ReceptiveField class.
+    It is defined by same parameters than base class and by audio parameters.
     '''
 
     def __init__(self, x, y, cap_list, retina, threshold = 0):
-        "Constructor"
+        '''
+        Constructor :
+        -------------
+        same as ReceptiveField class
+        
+        Audio parameters :
+        ------------------
+        freq_min, freq_max : frequency span
+        max_time           : playing time in seconds
+        amp                : amplitude factor
+        fs                 : sampling frequence
+        '''
         super(SoundRF, self).__init__(x, y, cap_list, retina, threshold)
         self._nb_chans = 2
         self._freq_span = None
@@ -205,14 +207,14 @@ class SoundRF(ReceptiveField):
         self._chnl = None
         
     def _make_sinwave(self, tone):
-        "Create a sinewave to be output"
+        "Create the sinewave to be output"
         sinewave = np.array(self._amp * np.sin(tone * np.pi * np.arange(0, self._max_time, 1/self._fs)), dtype = np.int16)
         if self._nb_chans == 2:
             sinewave = np.array([sinewave]*2, dtype = np.int16)
         return sinewave
         
     def set_audio_params(self, freq_min, freq_max, max_time, amp = 10000, fs = 44100, flip_y = False):
-        "Setup audio paramters for the Receptive Field instance. This is an example, should be overloaded."
+        "Setup audio paramters according to the receptive field specifications"
         self._freq_span = freq_max - freq_min
         self._max_time = max_time
         self._amp = amp
@@ -231,7 +233,7 @@ class SoundRF(ReceptiveField):
         # print('RF object inited - x: %d, y: %d, on %s' % (self._x, self._y, self._chnl))
         
     def output(self):
-        "Sound output method"
+        "Sonification method"
         left = self._pan[0] * self._activity
         right = self._pan[1] * self._activity 
         self._chnl.set_volume(left, right)
