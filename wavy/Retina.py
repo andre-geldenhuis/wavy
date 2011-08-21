@@ -33,8 +33,9 @@ import numpy as np
 
 try:
     from OpenGL.GL import glReadPixels, GL_LUMINANCE, GL_FLOAT
-except ImportError:
+except ImportError, e:
     HAS_GL = False
+    print("System message : %s" % e)
 else:
     HAS_GL = True
 

@@ -13,8 +13,9 @@ from math import radians
 try:
     from OpenGL.GL import *
     from OpenGL.GLU import *
-except ImportError:
+except ImportError, e:
     print("openGL binding for python not available on this computer !!!")
+    print("System message : %s" % e)
     exit(1)
 
 import pygame
