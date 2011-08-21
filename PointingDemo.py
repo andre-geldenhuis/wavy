@@ -4,13 +4,14 @@
 '''
 PointingGame is an example of sensory substitution
 game (or experiment) made possible by wavy.
-The game make appearing a white circle on the
-screen. The user can move over the screen a similar
-white circle and have to put it above the later one.
-Whene he/she think it's he have to push escape button
-to record its performance and the same task appear again.
-This application can be used to assess learning curve and
-favorise learning progression  of a senosry substitution system.  
+
+A white circle appears randomly on the screen. Player
+have to move with mouse an equivalent circle just above
+the former one.
+
+When s/he thinks it's ok, s/he can press 'space' key to
+record its performance (x and y error) (pointingOut.dat file)
+and start a new trial. 
 '''
 
 from __future__ import division

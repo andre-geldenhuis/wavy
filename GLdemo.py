@@ -1,7 +1,12 @@
 #! /usr/bin/env python
 # see CREDITS file for more details
 
-SCREEN_SIZE = (800, 600)
+
+'''
+First person 3D environment exploration game.
+Moves are triggered by arrow keys.
+Lateral translation with 'q' and 'a' keys.
+'''
 
 from math import radians 
 
@@ -19,6 +24,10 @@ from GLdemo.matrix44 import *
 from GLdemo.vector3 import *
 
 from wavy.WavyGame import ExternalWrapper
+
+
+
+SCREEN_SIZE = (800, 600)
 
 
 def resize(width, height):

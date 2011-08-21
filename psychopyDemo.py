@@ -1,5 +1,13 @@
 #! /usr/bin/env python
 
+
+'''
+An example of use of Wavy with a Psychopy experiment.
+Psychopy engine display's a psychophysic stimulus while wavy
+substitute it in an auditve output.
+'''
+
+
 from __future__ import division
 
 from random import randint

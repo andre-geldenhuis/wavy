@@ -1,5 +1,10 @@
 #! /usr/bin/env python
 
+'''
+Simple game in which player have to catch falling balls with its racket situated at the screen's bottom.
+Player can only move horizontally.
+'''
+
 from __future__ import division
 
 from random import randint
