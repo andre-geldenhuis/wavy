@@ -52,11 +52,18 @@ def viewRetina(file_name):
 	
 	
 def writeRetina(x_size, y_size, rf_list, cap_list, name = 'retina.ret'):
-	"""Generic function which format retina properties to a text output
+	"""
+	Generic retina writer function
+	Inputs:
+	-------
 	x_size, y_size     : retina's size
 	rf_list            : list of receptive fields coordinates
 	cap_list           : list of captors list
-	name               : file name to be used
+	name               : output file's name
+
+	Outpu:
+	------
+	UTF-8 text file
 	"""
 
         fRetina = open('retina.ret', 'w')
@@ -79,7 +86,10 @@ def writeRetina(x_size, y_size, rf_list, cap_list, name = 'retina.ret'):
 
 
 def LinearGridRetina(x_size, y_size, x_res, y_res, nbr_cap, sd_cap):
-	"""Build a linear sampling retina with lineary positionned receptivefields
+	"""
+	Build an uniform retina with linear grid of receptive fields
+	Inputs:
+	-------
 	x_size, y_size  : retina's size
 	x_res, y_res    : xy resolution
 	nbr_cap         : number of captors
@@ -115,7 +125,8 @@ def LinearGridRetina(x_size, y_size, x_res, y_res, nbr_cap, sd_cap):
 
 
 def LinearRandomRetina(x_size, y_size, nbr_rf, nbr_cap, sd_cap):
-	"""Build a linear sampling retina with randomly positionned receptivefields
+	"""
+	Build an uniform retina with randomly positionned receptive fields
 	x_size, y_size   : retina's size
 	nbr_rf           : number of receptive fields
 	nbr_cap          : number of captors
