@@ -102,10 +102,6 @@ class Retina(Thread):
             rf = self._rf_model(X, Y, cap_list, self)
             self._rf_list.append(rf)
             c1 += 2                    
-
-    def get_num_RF(self):
-        "Return the number of Receptive Fields set into the retina"
-        return self._nbr_rf
                           
     def update(self, gl_get = False):
         '''

@@ -177,7 +177,7 @@ class WavySoundGame(WavyGame):
         self._retina = Retina(self._retina_file, SoundRF, self._input_field)
         pygame.mixer.pre_init(self._fs, -16, 2, 1024*4)
         pygame.mixer.init()
-        pygame.mixer.set_num_channels(self._retina.get_num_RF() * 2)
+        pygame.mixer.set_num_channels(self._retina._nbr_rf * 2)
         rfs = self._retina._rf_list
         for rf in rfs:
             rf.set_audio_params(self._freq_min, self._freq_max, self._max_time, \
