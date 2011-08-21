@@ -1,6 +1,8 @@
 include README.txt
 include setup.py 
 include LICENSE.txt
+include wavy.conf
+include retina640_480.ret
 include *.py
 recursive-include wavy *
 recursive-include GLdemo *
