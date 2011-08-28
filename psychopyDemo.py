@@ -5,6 +5,9 @@
 An example of use of Wavy with a Psychopy experiment.
 Psychopy engine display's a psychophysic stimulus while wavy
 substitute it in an auditve output.
+This demo make use of an example available on PsychoPy website.
+Keep in mind that wavy is mainly intended to run simple displays 
+(B&W 2D stimuli).
 '''
 
 
