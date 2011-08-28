@@ -26,7 +26,7 @@ except ImportError:
     print("PsychoPy not available on this system !!!")
     exit(1)
 
-from wavy.WavyGame import ExternalWrapper
+from wavy.WavyWrappers import ExternalWrapper
 
 def main():
     #create a window to draw in
