@@ -13,7 +13,7 @@ from math import sqrt
 import pygame
 from pygame.locals import *
 
-from wavy.WavyGame import WavySoundGame
+from wavy.WavyWrappers import WavySoundGame
 
 
 class getItGame(WavySoundGame):

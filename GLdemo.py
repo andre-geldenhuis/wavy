@@ -24,7 +24,7 @@ from pygame.locals import *
 from GLdemo.matrix44 import *
 from GLdemo.vector3 import *
 
-from wavy.WavyGame import ExternalWrapper
+from wavy.WavyWrappers import ExternalWrapper
 
 
 

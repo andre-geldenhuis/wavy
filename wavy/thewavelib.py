@@ -38,7 +38,7 @@ import opencv
 from opencv import highgui
  
 from Retina import Retina, SoundRF
-from WavyGame import WavySoundGame
+from WavyWrappers import WavySoundGame
 
 
 class TheWaveMachine(WavySoundGame):
