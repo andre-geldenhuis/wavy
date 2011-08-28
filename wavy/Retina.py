@@ -47,20 +47,20 @@ class Retina(Thread):
     and call ReceptiveFields' output method.
     '''
     
-    def __init__(self, file_name, rf_model, input_array):
+    def __init__(self, file_name, rf_model, input_field):
         '''
         Constructor :
         -------------
         file_name     : file name of the retina file which contain sampling parameters
         rf_model      : ReceptiveField class to be used in sensory substitution process
-        input_array   : numeric array to be sampled (numpy array)
+        input_field   : numeric array to be sampled (numpy array)
         '''
         Thread.__init__(self)
         self._x_size = None
         self._y_size = None
         self._rf_list = []
         self._rf_model = rf_model
-        self._input_field = input_array
+        self._input_field = input_field
         self._init_retina(file_name)
         self._nbr_rf = len(self._rf_list)
         
