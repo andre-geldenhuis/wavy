@@ -203,7 +203,7 @@ class ExternalWrapper(WavySoundGame):
 
     def __init__(self, field_handle, gl, title = 'a test', config_file = './wavy.conf'):
         super(WavySoundGame, self).__init__(config_file, title, gl)
-        self._field_handle = field_handle
+        self._input_field = field_handle
         self.init()
     
     def _display_init(self):
