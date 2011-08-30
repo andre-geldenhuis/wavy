@@ -44,33 +44,28 @@ else:
 from Retina import Retina, SoundRF
 
 
-class WavyGame(Thread):
-    '''
-    WavyGame is a class to help you create easily a sensory substitution system for gaming.
-    Many of methods of this class must be implemented in order to be used.
-
+class WavyWrapper(Thread):
+    '''External wrapper use an external surface for sonification instead of a specific display. 
+    Referenbce to a numpy array is requiered if opengl mode is false
     Constructor :
     -------------
+    field_handle  : reference to an input array <numpy array>
     config_file   : configuration file to be load (optionnal, default: None)
-    title         : Title to be displayed onto the window's caption
     gl            : is display surface set with OPENGL mode 
-    update_method : method to be used for dipsplay update ('update' or 'flip')
+    update_method : method to be used for dipsplay update ('update' or 'flip')    
     '''
-
-
-    def __init__(self, config_file = None, title = 'Wavy Game Engine', gl = False, update_method = 'update'):
+    
+    def __init__(self, input_handle, config_file = None, gl = False, update_method = 'update'):
         '''
         Constructor
         '''
         Thread.__init__(self)
         self._height = None
         self._width = None
-        self._screen = None           # pyGame display reference
-        self._input_field = None      # array reference to SCREEN
+        self._input_field = input_handle
         self._retina = None
         self._config = ConfigParser.RawConfigParser()
         self._config_file = config_file
-        self._title = title
         self._gl = gl
         if self._gl:
             assert HAS_GL, 'No OpenGL package found !'
@@ -104,6 +99,51 @@ class WavyGame(Thread):
                 print('ERROR !\nUnable to fetch config file : %s' % self._config_file)
                 exit(1)
     
+    def _fetch_config(self):
+        "Generic method to fetch config file"
+        raise NotImplementedError
+                                  
+    def _retina_init(self):
+        "Generic method to setup Retina"
+        raise NotImplementedError
+                       
+    def refresh(self):
+        "Refresh screen and Retina"
+
+        if self._gl:
+            self._retina.update(gl_get = True)
+        else:
+            self._retina.update()
+
+    def init(self):
+        "Generic init method"
+        raise NotImplementedError
+    
+    def main(self):
+        raise NotImplementedError
+
+
+class WavyGame(WavyWrapper):
+    '''
+    WavyGame is a class to help you create easily a sensory substitution system for gaming.
+    Many of methods of this class must be implemented in order to be used.
+
+    Constructor :
+    -------------
+    config_file   : configuration file to be load (optionnal, default: None)
+    title         : Title to be displayed onto the window's caption
+    gl            : is display surface set with OPENGL mode 
+    update_method : method to be used for dipsplay update ('update' or 'flip')
+    '''
+
+    def __init__(self, config_file = 'wavy.conf', title = 'Wavy Game Engine', gl = False, update_method = 'update'):
+        '''
+        Constructor
+        '''
+        WavyWrapper.__init__(self, None, config_file, gl, update_method)
+        self._screen = None           # pyGame display reference
+        self._title = title
+
     def _display_init(self):
         "Setup the display system"
         pygame.display.init()
@@ -164,7 +204,7 @@ class WavySoundGame(WavyGame):
 
     def __init__(self, config_file, title = 'Wavy Game Engine', gl = False, update_method = 'update'):
         "Constructor"
-        super(WavyGame, self).__init__(config_file, title, gl, update_method)
+        WavyGame.__init__(self, config_file, title, gl, update_method)
         self._retina_file = None
         self._fs = None        # Audio parameters pre-init : required 
         self._freq_min = None  # a properly implemented _fetch_config method is needed
@@ -195,25 +235,3 @@ class WavySoundGame(WavyGame):
         self._freq_max = self._config.getfloat('SONIFICATION', 'FREQ_MAX')
         self._max_time = self._config.getfloat('SONIFICATION', 'MAX_TIME')
         self._flip_y = self._config.getboolean('SONIFICATION', 'FLIP_Y')
-
-
-class ExternalWrapper(WavySoundGame):
-    '''External wrapper use an external surface for sonification instead of a specific display. 
-    Referenbce to a numpy array is requiered if opengl mode is false'''
-
-    def __init__(self, field_handle, gl, title = 'a test', config_file = './wavy.conf'):
-        super(WavySoundGame, self).__init__(config_file, title, gl)
-        self._input_field = field_handle
-        self.init()
-    
-    def _display_init(self):
-        "No display init in this class must be done outside"
-        pass
-
-    def refresh(self):
-        "Refresh screen and Retina without refreshing surface (done outside)"
-
-        if self._gl:
-            self._retina.update(gl_get = True)
-        else:
-            self._retina.update()
