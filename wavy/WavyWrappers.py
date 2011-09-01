@@ -33,14 +33,6 @@ import ConfigParser
 import pygame
 from pygame.surfarray import pixels2d
 
-try:
-    from OpenGL.GL import glReadPixels, GL_LUMINANCE, GL_FLOAT
-except ImportError, e:
-    HAS_GL = False
-    print("System message : %s" % e)
-else:
-    HAS_GL = True
-
 from Retina import Retina, SoundRF
 
 
