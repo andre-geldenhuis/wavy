@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-#    Copyright 2010, Nicolas Louveton <nblouveton@gmail.com>
+#    Copyright 2011, Nicolas Louveton <nblouveton@gmail.com>
 #
 #    This file is part of Wavy.
 #

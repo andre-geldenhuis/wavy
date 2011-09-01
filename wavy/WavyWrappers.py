@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-#    Copyright 2010, Nicolas Louveton <nblouveton@gmail.com>
+#    Copyright 2011, Nicolas Louveton <nblouveton@gmail.com>
 #
 #    This file is part of Wavy.
 #
@@ -111,6 +111,7 @@ class WavyWrapper(Thread):
     def stop(self):
         if self._log_file is not None:
             self._log_file.close()
+
     def main(self):
         raise NotImplementedError
 
