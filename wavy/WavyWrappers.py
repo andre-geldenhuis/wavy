@@ -80,6 +80,10 @@ class WavyWrapper(Thread):
             try:
                 self._fetch_config()
 
+            except NoSectionError, section:
+                print('ERROR !\nConfig section does not exist : %s' % section)
+                exit(1)
+
             except NotImplementedError:
                 print('ERROR !\nfetchConfig is called without a correct implementation')
                 exit(1)
