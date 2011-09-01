@@ -107,7 +107,10 @@ class WavyWrapper(Thread):
     def init(self):
         "Generic init method"
         raise NotImplementedError
-    
+
+    def stop(self):
+        if self._log_file is not None:
+            self._log_file.close()
     def main(self):
         raise NotImplementedError
 
