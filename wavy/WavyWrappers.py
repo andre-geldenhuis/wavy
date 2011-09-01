@@ -73,17 +73,6 @@ class WavyWrapper(Thread):
         else:
             self._update_method = update_method
 
-    def _write_config(self):
-        "Write the config file"
-        try:
-            f = open(str(self._config_file), 'w')
-
-        except IOError:
-            print('Unable to write config file : %s' % self._config_file)
-            
-        self._config.write(f)
-        f.close()
-
     def _config_init(self):
         "Read the config file and fetch values"
         if self._config_file is not None:
