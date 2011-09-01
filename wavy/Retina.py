@@ -26,6 +26,7 @@ SoundRF        - Sonification oriented ReceptiveField
 
 from __future__ import division
 
+from time import time
 from threading import Thread
 
 import pygame
@@ -63,7 +64,8 @@ class Retina(Thread):
         self._input_field = input_field
         self._init_retina(file_name)
         self._nbr_rf = len(self._rf_list)
-        
+        self._time0 = time()
+
     def _init_retina(self, file_name):
         "Read the retina file and setup all Receptive Fields according to retina file's data"
         try:
@@ -104,11 +106,14 @@ class Retina(Thread):
             self._rf_list.append(rf)
             c1 += 2                    
                           
-    def update(self, gl_get = False):
+    def update(self, gl_get = False, log = None):
         '''
         Update each Receptive Field and output them
         gl_get is a boolean flag to specify if the video buffer have to be read from openGL buffer.
+        log is path to log file, None if no log needed.
         '''
+        time_t = time()
+        if log is not None: log.write(str(time_t - self._time0))
         for rf in self._rf_list:
             rf.update(gl_get)
             rf.output()

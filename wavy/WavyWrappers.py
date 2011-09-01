@@ -47,7 +47,7 @@ class WavyWrapper(Thread):
     update_method : method to be used for dipsplay update ('update' or 'flip')    
     '''
     
-    def __init__(self, input_handle, config_file = None, gl = False, update_method = 'update'):
+    def __init__(self, input_handle, config_file = None, gl = False, update_method = 'update', log_file = None):
         '''
         Constructor
         '''
@@ -59,6 +59,14 @@ class WavyWrapper(Thread):
         self._config = ConfigParser.RawConfigParser()
         self._config_file = config_file
         self._gl = gl
+
+        try:
+            self._log_file = open(log_file)
+
+        except IOError:
+            print('ERROR !\nNo such log file found %s' % log_file)
+            self._log_file = None
+
         if self._gl:
             assert HAS_GL, 'No OpenGL package found !'
             self._update_method = 'flip'
@@ -73,7 +81,7 @@ class WavyWrapper(Thread):
                 self._fetch_config()
 
             except ConfigParser.NoSectionError, section:
-                print('ERROR !\nConfig section does not exist ! %s' % section)
+                print('ERROR !\nPlease check :  %s in config file %s' % (section, self._config_file))
                 exit(1)
 
             except NotImplementedError:
@@ -94,11 +102,7 @@ class WavyWrapper(Thread):
                        
     def refresh(self):
         "Refresh screen and Retina"
-
-        if self._gl:
-            self._retina.update(gl_get = True)
-        else:
-            self._retina.update()
+        self._retina.update(self._gl, self._log_file)
 
     def init(self):
         "Generic init method"
@@ -141,8 +145,8 @@ class WavyGame(WavyWrapper):
 
         except TypeError:
             print('ERROR !\nInteger value expected :')
-            print('width given : %s' % type(self._width))
-            print('height given : %s' % type(self._height))
+            print('%s is given for width' % type(self._width))
+            print('%s is given for height' % type(self._height))
             exit(1)
             
         pygame.display.set_caption(self._title)
