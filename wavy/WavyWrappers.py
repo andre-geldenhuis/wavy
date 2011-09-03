@@ -70,7 +70,6 @@ class WavyWrapper(Thread):
                 self._log_file = None
 
         if self._gl:
-            HAS_GL, 'No OpenGL package found !'
             self._update_method = 'flip'
         else:
             self._update_method = update_method
