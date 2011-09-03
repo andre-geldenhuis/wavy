@@ -106,14 +106,19 @@ class Retina(Thread):
             self._rf_list.append(rf)
             c1 += 2                    
                           
-    def update(self, gl_get = False, log = None):
+    def update(self, gl_get = False, log_file = None):
         '''
         Update each Receptive Field and output them
         gl_get is a boolean flag to specify if the video buffer have to be read from openGL buffer.
         log is path to log file, None if no log needed.
         '''
-        time_t = time()
-        if log is not None: log.write(str(time_t - self._time0))
+
+        if log_file is not None:
+            log = open(log_file, 'a')
+            time_t = time()
+            log.write(str(time_t - self._time0) + '\n')
+            log.close()
+
         for rf in self._rf_list:
             rf.update(gl_get)
             rf.output()

@@ -59,16 +59,18 @@ class WavyWrapper(Thread):
         self._config = ConfigParser.RawConfigParser()
         self._config_file = config_file
         self._gl = gl
+        self._log_file = log_file
 
-        try:
-            self._log_file = open(log_file)
-
-        except IOError:
-            print('ERROR !\nNo such log file found %s' % log_file)
-            self._log_file = None
+        if self._log_file is not None:
+            try:
+                log = open(self._log_file, 'w')
+                log.close()
+            except IOError:
+                print('ERROR !\nUnable to write on log file: %s' % log_file)
+                self._log_file = None
 
         if self._gl:
-            assert HAS_GL, 'No OpenGL package found !'
+            HAS_GL, 'No OpenGL package found !'
             self._update_method = 'flip'
         else:
             self._update_method = update_method
@@ -129,11 +131,11 @@ class WavyGame(WavyWrapper):
     update_method : method to be used for dipsplay update ('update' or 'flip')
     '''
 
-    def __init__(self, config_file = 'wavy.conf', title = 'Wavy Game Engine', gl = False, update_method = 'update'):
+    def __init__(self, config_file = 'wavy.conf', title = 'Wavy Game Engine', gl = False, update_method = 'update', log_file = None):
         '''
         Constructor
         '''
-        WavyWrapper.__init__(self, None, config_file, gl, update_method)
+        WavyWrapper.__init__(self, None, config_file, gl, update_method, log_file)
         self._screen = None           # pyGame display reference
         self._title = title
 
@@ -172,10 +174,7 @@ class WavyGame(WavyWrapper):
         else:
             pygame.display.flip()
 
-        if self._gl:
-            self._retina.update(gl_get = True)
-        else:
-            self._retina.update()
+        self._retina.update(self._gl, self._log_file)
 
     def init(self):
         "Generic init method"
@@ -195,9 +194,9 @@ class WavySoundGame(WavyGame):
     title       : Title to be displayed onto the window's caption
     '''
 
-    def __init__(self, config_file, title = 'Wavy Game Engine', gl = False, update_method = 'update'):
+    def __init__(self, config_file, title = 'Wavy Game Engine', gl = False, update_method = 'update', log_file = None):
         "Constructor"
-        WavyGame.__init__(self, config_file, title, gl, update_method)
+        WavyGame.__init__(self, config_file, title, gl, update_method, log_file)
         self._retina_file = None
         self._fs = None        # Audio parameters pre-init : required 
         self._freq_min = None  # a properly implemented _fetch_config method is needed

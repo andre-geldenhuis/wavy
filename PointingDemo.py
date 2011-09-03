@@ -27,8 +27,8 @@ from wavy.WavyWrappers import WavySoundGame
 
 class PointingGame(WavySoundGame):
     
-    def __init__(self, title = 'a test', config_file = './wavy.conf'):
-        super(WavySoundGame, self).__init__(config_file, title)
+    def __init__(self, title = 'a test', config_file = './wavy.conf', log_file = None):
+        WavySoundGame.__init__(self, config_file, title, log_file = log_file)
         self.init()
 
     def main(self):
@@ -76,5 +76,5 @@ class PointingGame(WavySoundGame):
 
 
 if __name__=='__main__':
-    pg = PointingGame()
+    pg = PointingGame(log_file = 'wavy.log')
     pg.main()
