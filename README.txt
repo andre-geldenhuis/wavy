@@ -13,6 +13,7 @@ Wavy is a free software remeased under the GPLv3 license.
 For more details, see LICENSE file in this directory or visit :
 http://www.gnu.org/licenses/gpl.txt
 
+Please check wavy's webpage : http://nblouveton.wordpress.com/wavy/
 
 [ BEFORE INSTALLATION ]
 
