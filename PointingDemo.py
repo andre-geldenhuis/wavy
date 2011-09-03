@@ -76,5 +76,5 @@ class PointingGame(WavySoundGame):
 
 
 if __name__=='__main__':
-    pg = PointingGame(log_file = 'wavy.log')
+    pg = PointingGame(log_file = 'wavy.log') #log_file = None, if you don't want to log retina's loop
     pg.main()
