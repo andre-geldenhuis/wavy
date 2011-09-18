@@ -9,7 +9,7 @@ Wavy is an agile sensory substitution system designed to make
 easier prototyping, experimenting and playing with sensory
 substitution.
 
-Wavy is a free software remeased under the GPLv3 license.
+Wavy is a free software released under the GPLv3 license.
 For more details, see LICENSE file in this directory or visit :
 http://www.gnu.org/licenses/gpl.txt
 
