@@ -3,7 +3,7 @@
 #################################################################
 
 v1.x
-Nicolas Louveton - <nblouveton /at/  gmail /dot/ com>
+Nicolas Louveton
 
 Wavy is an agile sensory substitution system designed to make
 easier prototyping, experimenting and playing with sensory
@@ -13,7 +13,8 @@ Wavy is a free software released under the GPLv3 license.
 For more details, see LICENSE file in this directory or visit :
 http://www.gnu.org/licenses/gpl.txt
 
-Please check wavy's webpage : http://nblouveton.wordpress.com/wavy/
+Please check wavy's webpage : 
+http://nblouveton.wordpress.com/wavy/
 
 [ BEFORE INSTALLATION ]
 
