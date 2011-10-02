@@ -103,6 +103,7 @@ class Retina(Thread):
                 c2 += 2
                 
             rf = self._rf_model(X, Y, cap_list, self)
+            rf._id = c1
             self._rf_list.append(rf)
             c1 += 2                    
                           
@@ -150,6 +151,7 @@ class ReceptiveField(Thread):
         self._input_field = retina._input_field
         self._activity = 0.
         self._gl = False
+        self._id = -1
         
     def _t_func(self, initial_activity):
         "Threshold transfert function"
